@@ -49,18 +49,20 @@ if __name__ == '__main__':
     popStack = Stack()
     while q > 0:
         inp = input()
-        type = int(inp.split(" ")[0])
-        if type == 1:
+        inp_type = int(inp.split(" ")[0])
+        if inp_type == 1:
             elem = int(inp.split(" ")[1])
             pushStack.push(elem)
-        elif type == 2:
+        elif inp_type == 2:
             if popStack.is_empty():
                 for i in range(pushStack.size()):
-                    popStack.push(pushStack.pop())
+                    popStack.push(pushStack.peek())
+                    pushStack.pop()
             popStack.pop()
-        elif type == 3:
+        elif inp_type == 3:
             if popStack.is_empty():
                 for i in range(pushStack.size()):
-                    popStack.push(pushStack.pop())
+                    popStack.push(pushStack.peek())
+                    pushStack.pop()
             print(popStack.peek())
         q -= 1
