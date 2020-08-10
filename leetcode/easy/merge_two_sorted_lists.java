@@ -20,27 +20,37 @@ class ListNode {
 class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     	
-    	ListNode mergedList = new ListNode();
-    	while (l1.next != null && l2.next != null) {
+    	ListNode l1_prev = l1;
+    	ListNode l2_prev = l2;
+
+    	ListNode dummyHead = new ListNode(0);
+    	ListNode mergedList = dummyHead;
+
+    	while (l1_prev.next != null && l2_prev.next != null) {
     		if (l1.val <= l2.val) {
     			mergedList.next = l1;
+    			l1_prev = l1;
     			l1 = l1.next;
     		} else {
     			mergedList.next = l2;
+    			l2_prev = l2;
     			l2 = l2.next;
     		}
-    		printList(mergedList);
-    	}
+    		mergedList = mergedList.next;
     	
-    	if (l1.next != null) {
+	    	printList(mergedList);
+	    	printList(dummyHead);
+
+    	}
+    	if (l1_prev.next != null) {
     		mergedList.next = l1;
     	}
     	
-    	if (l2.next != null) {
+    	if (l2_prev.next != null) {
     		mergedList.next = l2;
     	}
     	
-    	return mergedList;
+    	return dummyHead.next;
         
     }
     
@@ -49,6 +59,7 @@ class Solution {
     		System.out.print(l.val + "->");
     		l = l.next;
     	}
+    	System.out.println("");
     }
     
     public static void main(String[] args) {
@@ -57,10 +68,7 @@ class Solution {
     	
     	Solution sol = new Solution();
     	ListNode mergedList = sol.mergeTwoLists(l1, l2);
-    	ListNode l = mergedList;
-    	while (l != null) {
-    		System.out.println(l.val + "->");
-    		l = l.next;
-    	}
+    	sol.printList(mergedList);
+    	
     }
 }
