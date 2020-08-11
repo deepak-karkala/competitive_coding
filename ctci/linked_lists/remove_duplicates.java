@@ -1,5 +1,5 @@
 package linked_lists;
-import java.util.HashMap;
+import java.util.HashSet;
 /*
  * Write code to remove duplicates from an unsorted linked list.
  */
@@ -55,17 +55,15 @@ class LinkedList {
 		Node runner = n;
 		LinkedList list = new LinkedList(n);
 		
-		HashMap<Integer, Integer> hmap = new HashMap<Integer, Integer>();
-		int key = 0;
+		HashSet<Integer> hset = new HashSet<Integer>();
 		while (runner.next != null) {
-			if (hmap.containsValue(n.val)) {
+			if (hset.contains(n.val)) {
 				runner.next = n.next;
 			} else {
-				hmap.put(key, n.val);
+				hset.add(n.val);
 				runner = n;
 			}
 			n = n.next;
-			key++;
 		}
 		return list;
 	}
