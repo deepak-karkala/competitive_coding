@@ -24,6 +24,6 @@ class PartitionList {
     	
     	// Set smallerList's last node.next to biggerLast.head
     	// Return smallerList.head
-    	smallerList.next = 
+    	smallerList.next = biggerLast; 
     }
 }
