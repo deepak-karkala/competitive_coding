@@ -54,10 +54,8 @@ public class PowerSet {
 				moreSubsets.add(newSubset);
 			}
 		}
-		
 		allSubsets.addAll(moreSubsets);
 		return;
-		
 	}
 	
 	
@@ -133,8 +131,8 @@ public class PowerSet {
 	
 	
 	public static void main(String[] args) {
-		String[] set = {"a", "b", "c"};
-		ArrayList<ArrayList<String>> subsets = findSubsets3(set);	
+		String[] set = {"a", "b", "c", "d"};
+		HashSet<HashSet<String>> subsets = findSubsets2(set);	
 		System.out.println(Arrays.toString(subsets.toArray()));	
  	}
 }
