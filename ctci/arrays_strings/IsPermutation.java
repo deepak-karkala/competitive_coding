@@ -3,16 +3,17 @@ package arrays_strings;
 import java.util.Arrays;
 
 public class IsPermutation {
-    public static String sort(String s) {
-        char[] charr = s.toCharArray();
-        Arrays.sort(charr);
-        return new String(charr);
-    }
+    
 
     public static boolean isPermutation(String s1, String s2) {
         if (s1.length() != s2.length()) return false;
         //return isSameCharacters(countCharacters(s1), countCharacters(s2));
         return sort(s1).equals(sort(s2));
+    }
+    public static String sort(String s) {
+        char[] charr = s.toCharArray();
+        Arrays.sort(charr);
+        return new String(charr);
     }
 
     public static boolean isSameCharacters(int[] count1, int[] count2) {
