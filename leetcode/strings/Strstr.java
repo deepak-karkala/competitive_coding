@@ -5,7 +5,7 @@
 
  public class Strstr {
     public static int strStr(String haystack, String needle) {
-        //if (needle.length() > haystack.length()) return false;
+        if (needle.length() > haystack.length()) return -1;
         int index1 = 0;
         int index2 = 0;
         int substrlen = needle.length();
