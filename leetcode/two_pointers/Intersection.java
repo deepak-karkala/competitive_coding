@@ -43,7 +43,6 @@ public class Intersection {
      */
     public static int[] intersection_sort(int[] nums1, int[] nums2) {
         HashSet<Integer> intr = new HashSet<Integer>();
-        //ArrayList<Integer> intr = new ArrayList<Integer>();
 
         Arrays.sort(nums1);
         Arrays.sort(nums2);
@@ -63,7 +62,6 @@ public class Intersection {
         }
         
         int[] result = set_to_array(intr);
-        //int[] result = list_to_array(intr);
         return result;
     }
 
@@ -75,7 +73,6 @@ public class Intersection {
      */
     public static int[] intersection_binarysearch(int[] nums1, int[] nums2) {
         HashSet<Integer> intr = new HashSet<Integer>();
-        //ArrayList<Integer> intr = new ArrayList<Integer>();
 
         Arrays.sort(nums1);
         for(int i=0; i<nums2.length; i++) {
@@ -83,7 +80,6 @@ public class Intersection {
         }
 
         int[] result = set_to_array(intr);
-        //int[] result = list_to_array(intr);
         return result;
     }
 
@@ -93,6 +89,37 @@ public class Intersection {
         Iterate through second, if it exists in hash-set then add that element to another hash-set
         O(n) time with O(n) extra space
      */
+    public static int[] intersection_hashset(int[] nums1, int[] nums2) {
+        HashSet<Integer> hs = new HashSet<Integer>();
+        HashSet<Integer> intr = new HashSet<Integer>();
+
+        for(int i=0; i<nums1.length; i++) hs.add(nums1[i]);
+
+        for(int i=0; i<nums2.length; i++) {
+            if (hs.contains(nums2[i])) intr.add(nums2[i]);
+        }
+
+        int[] result = set_to_array(intr);
+        return result;
+    }
+
+
+    public static int[] intersection_list(int[] nums1, int[] nums2) {
+        ArrayList<Integer> arl = new ArrayList<Integer>();
+        ArrayList<Integer> intr = new ArrayList<Integer>();
+
+        for(int i=0; i<nums1.length; i++) arl.add(nums1[i]);
+
+        for(int i=0; i<nums2.length; i++) {
+            if (arl.contains(nums2[i])) {
+                intr.add(nums2[i]);
+                arl.remove(arl.indexOf(nums2[i]));
+            }
+        }
+
+        int[] result = list_to_array(intr);
+        return result;
+    }
 
     public static boolean binarysearch(int[] arr, int key) {
         int low = 0, high = arr.length-1;
@@ -130,9 +157,9 @@ public class Intersection {
     }
 
     public static void main(String[] args) {
-        int[] nums1 = {1,2,2,1};
-        int[] nums2 = {2,2};
-        int[] intr = intersection_binarysearch(nums1, nums2);
+        int[] nums1 = {1, 2, 2, 1};
+        int[] nums2 = {2, 2, 3};
+        int[] intr = intersection_list(nums1, nums2);
         System.out.println(Arrays.toString(intr));
     }
 }
