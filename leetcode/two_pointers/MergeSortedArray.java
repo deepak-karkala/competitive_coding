@@ -40,28 +40,36 @@ public class MergeSortedArray {
     public static int[] merge_list(ArrayList<Integer> a, ArrayList<Integer> b) {
 
         int i=a.size()-1, j=b.size()-1, k=a.size()+b.size()-1;
+        int idx = i+1;
+        while(idx <= k) {
+            a.add(idx,0);
+            idx++;
+        }
         
         while((i>=0) && (j>=0)) {
-
-            if (a.indexOf(i) >= b.indexOf(j)) {
-                a.add(k, a.indexOf(i));
+            if (a.get(i) >= b.get(j)) {
+                a.set(k, a.get(i));
                 i--;
-            } else if (a.indexOf(i) < b.indexOf(j)) {
-                a.add(k, b.indexOf(j));
+            } else if (a.get(i) < b.get(j)) {
+                a.set(k, b.get(j));
                 j--;
             }
             k--;
         }
 
+        
         while (j>=0) {
-            a.add(k, a.indexOf(i));
+            a.set(k, b.get(j));
             k--;
+            j--;
         }
         while (i>=0) {
-            a.add(k, b.indexOf(j));
+            a.set(k, a.get(i));
             k--;
+            i--;
         }
-
+        
+ 
         int[] res = list_to_array(a);
         return res;
     }
@@ -76,12 +84,12 @@ public class MergeSortedArray {
     }
 
     public static void main(String[] args) {
-        int[] nums1 = {1,2,3,0,0,0};
+        //int[] nums1 = {1,2,3,0,0,0};
         int m = 3,  n = 3;
-        int[] nums2 = {2,5,6};
+        int[] nums2 = {1,2,5,6};
         //int[] res = merge(nums1, m, nums2, n);
 
-
+        int[] nums1 = {2,7};
         ArrayList<Integer> a = new ArrayList<Integer>(nums1.length);
         for (int i : nums1) a.add(i);
         ArrayList<Integer> b = new ArrayList<Integer>(nums1.length);
