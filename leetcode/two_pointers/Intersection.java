@@ -83,6 +83,22 @@ public class Intersection {
         return result;
     }
 
+    public static boolean binarysearch(int[] arr, int key) {
+        int low = 0, high = arr.length-1;
+        while (low <= high) {
+            int mid = low + ((high-low)/2);
+
+            if (arr[mid] == key) {
+                return true;
+            } else if (arr[mid] > key) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return false;
+    }
+
     /*
      * Hashsets: One to store all elements of one array, other to store common elements
         Iterate through first array and add all elements to hash-set
@@ -103,6 +119,14 @@ public class Intersection {
         return result;
     }
 
+    public static int[] set_to_array(HashSet<Integer> hs) {
+        int[] res = new int[hs.size()];
+        int i = 0;
+        for(Integer num: hs) {
+            res[i++] = num;
+        }
+        return res;
+    }
 
     public static int[] intersection_list(int[] nums1, int[] nums2) {
         ArrayList<Integer> arl = new ArrayList<Integer>();
@@ -119,32 +143,6 @@ public class Intersection {
 
         int[] result = list_to_array(intr);
         return result;
-    }
-
-    public static boolean binarysearch(int[] arr, int key) {
-        int low = 0, high = arr.length-1;
-        while (low <= high) {
-            int mid = low + ((high-low)/2);
-
-            if (arr[mid] == key) {
-                return true;
-            } else if (arr[mid] > key) {
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
-        }
-        return false;
-    }
-
-
-    public static int[] set_to_array(HashSet<Integer> hs) {
-        int[] res = new int[hs.size()];
-        int i = 0;
-        for(Integer num: hs) {
-            res[i++] = num;
-        }
-        return res;
     }
 
     public static int[] list_to_array(ArrayList<Integer> arl) {
