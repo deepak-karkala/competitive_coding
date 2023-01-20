@@ -59,21 +59,25 @@ public class Kdiffpairs {
         if (nums.length == 1) return 0;
         int count = 0;
         int i = 0, j = 1;
-        /*
+        
         Arrays.sort(nums);
-        while (j < nums.length) {
-            if ((nums[j] - nums[i]) < k) {
-                j++;
-            } else if ((nums[j] - nums[i]) > k) {
+        while ((i<j) && (j < nums.length)) {
+
+            if ((i>0) && (nums[i]==nums[i-1])) {
                 i++;
-                if (i==j) j++;
             } else {
-                count++;
-                i++;
-                //j++;
+                if ((nums[j] - nums[i]) < k) {
+                    j++;
+                } else if ((nums[j] - nums[i]) > k) {
+                    i++;
+                } else {
+                    count++;
+                    i++;
+                }
             }
+            if (i==j) j++;
         }
-        */
+        
         return count;
     }
 
@@ -122,8 +126,9 @@ public class Kdiffpairs {
 
     public static void main(String[] args) {
         //int[] nums = {1,2,4,4,3,3,0,9,2,3};
-        int[] nums = {3,1,4,1,5};
-        int k = 0;
-        System.out.println(kdiffpairs_hashset(nums, k));
+        //int[] nums = {3,1,4,1,5};
+        int[] nums = {1,2,3,4,5};
+        int k = 1;
+        System.out.println(kdiffpairs_twopointers(nums, k));
     }
 }
