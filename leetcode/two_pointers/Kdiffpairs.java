@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /*
  * K-diff Pairs in an Array
@@ -89,13 +90,9 @@ public class Kdiffpairs {
         }
         if (k==0) return rep.size();
 
-        for (int num: nums) {
-            if (hs.contains(num + k)) count++;
-            if (hs.contains(num - k)) count++;
-            System.out.println(num + " " + count);
-            hs.remove(num);
+        for(Integer ele: hs) {
+            if (hs.contains(ele + k)) count++;
         }
-
         return count;
     }
 
@@ -124,9 +121,9 @@ public class Kdiffpairs {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1,2,4,4,3,3,0,9,2,3};
-        //int[] nums = {3,1,4,1,5};
-        int k = 3;
+        //int[] nums = {1,2,4,4,3,3,0,9,2,3};
+        int[] nums = {3,1,4,1,5};
+        int k = 0;
         System.out.println(kdiffpairs_hashset(nums, k));
     }
 }
