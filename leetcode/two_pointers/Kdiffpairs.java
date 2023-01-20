@@ -1,6 +1,8 @@
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 
 /*
  * K-diff Pairs in an Array
@@ -77,7 +79,6 @@ public class Kdiffpairs {
             }
             if (i==j) j++;
         }
-        
         return count;
     }
 
@@ -104,6 +105,19 @@ public class Kdiffpairs {
         if (nums.length == 1) return 0;
         int count = 0;
 
+        Map<Integer, Integer> hm = new HashMap<Integer, Integer>();
+        for(int num: nums) {
+            if (hm.containsKey(num)) {
+                hm.put(num, hm.get(num)+1);
+            } else {
+                hm.put(num, 1);
+            }
+        }
+
+        for(int key: hm.keySet()) {
+            if ( ((k==0) && (hm.get(key)>1)) || ((k>0) && (hm.containsKey(key+k))) ) count++;
+        }
+
         return count;
     }
 
@@ -125,10 +139,10 @@ public class Kdiffpairs {
     }
 
     public static void main(String[] args) {
-        //int[] nums = {1,2,4,4,3,3,0,9,2,3};
+        int[] nums = {1,2,4,4,3,3,0,9,2,3};
         //int[] nums = {3,1,4,1,5};
-        int[] nums = {1,2,3,4,5};
-        int k = 1;
-        System.out.println(kdiffpairs_twopointers(nums, k));
+        //int[] nums = {1,2,3,4,5};
+        int k = 3;
+        System.out.println(kdiffpairs_hashmap(nums, k));
     }
 }
