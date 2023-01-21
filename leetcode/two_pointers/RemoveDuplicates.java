@@ -28,21 +28,6 @@ be kept the same.
 
     public static ArrayList<Integer> removeDuplicates_list(ArrayList<Integer> a) {
         int i = 0, j = 0;
-        //ArrayList<Integer> arl = new ArrayList<Integer>();
-        
-        /*
-        while(i<a.size()) {
-            if ( (i==0) || (a.get(i)!=a.get(i-1)) ) {
-                a.set(j, a.get(i));
-                j++;
-                i++;
-                System.out.println(j);
-            } else {
-                i++;
-            }
-        }
-        */
-
         int prev = a.get(0);
         for(Integer curr: a) {
             if ( (j==0) || (curr != prev) ) {
@@ -52,6 +37,7 @@ be kept the same.
             } else {
                 i++;
             }
+            prev = curr;
         }
 
         return a;
@@ -63,11 +49,16 @@ be kept the same.
         //System.out.println(Arrays.toString(nums));
 
         ArrayList<Integer> a = new ArrayList<Integer>();
-        a.add(5000);
-        a.add(5000);
-        a.add(5000);
+        a.add(0);
+        a.add(0);
+        a.add(0);
+        a.add(1);
+        a.add(1);
+        a.add(1);
+        a.add(2);
+        a.add(2);
+        a.add(2);
         a = removeDuplicates_list(a);
-        //System.out.println(k);
         for(Integer el: a) {
             System.out.println(el);
         }
