@@ -39,7 +39,6 @@ be kept the same.
             }
             prev = curr;
         }
-
         return a;
     }
 
