@@ -1,4 +1,12 @@
-public class HammingWeight {
+/*
+ * 190. Reverse Bits
+Easy
+4.1K
+1K
+Reverse bits of a given 32 bits unsigned integer.
+ */
+
+ public class HammingWeight {
     
     public static int hammingweight(int n) {
         int count = 0;
