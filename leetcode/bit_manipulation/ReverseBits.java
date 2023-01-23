@@ -11,11 +11,20 @@ public class ReverseBits {
     public static int reverseBits(int n) {
         int rev = 0;
 
+        /*
         for(int i=0; i<32; i++) {
             int bit = (n & 1);
             n = n >>> 1;
             rev = rev | (bit << (31-i));
         }
+        */
+
+        for(int i=0; i<32; i++) {
+            rev += (n & 1);
+            n >>>= 1;
+            if (i<31) rev <<=1;
+        }
+
         return rev;
     }
 
