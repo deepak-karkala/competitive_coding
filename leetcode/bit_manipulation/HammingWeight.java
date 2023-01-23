@@ -1,9 +1,7 @@
 /*
- * 190. Reverse Bits
-Easy
-4.1K
-1K
-Reverse bits of a given 32 bits unsigned integer.
+ * 191. Number of 1 Bits
+Write a function that takes an unsigned integer and returns the
+number of '1' bits it has (also known as the Hamming weight).
  */
 
  public class HammingWeight {
