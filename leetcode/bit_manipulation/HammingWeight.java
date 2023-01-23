@@ -10,8 +10,15 @@ public class HammingWeight {
         }
         */
 
+        /*
         for(int i=0; i<32; i++) {
             count += (n>>i & 1);
+        }
+        */
+
+        while (n!=0) {
+            n = n & (n-1);
+            count++;
         }
         return count;
     }
