@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Single Number
 Easy
@@ -16,8 +19,20 @@ public class SingleNumber {
         return result;
     }
 
+    public static int singleNumber_list(List<Integer> A) {
+        int result = 0;
+
+        for(int num: A) result ^= num;
+        return result;
+    }
+
     public static void main(String[] args) {
         int[] nums = {1,4,4,2,2,3,1};
-        System.out.println(singleNumber(nums));
+        //System.out.println(singleNumber(nums));
+        List<Integer> A = new ArrayList<Integer>();
+        A.add(1);
+        A.add(2);
+        A.add(2);
+        System.out.println(singleNumber_list(A));
     }
 }
