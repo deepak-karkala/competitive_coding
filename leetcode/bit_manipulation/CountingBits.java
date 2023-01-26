@@ -25,8 +25,25 @@ public class CountingBits {
         return nbits;
     }
 
+    /*
+     * Recursive / bottom-up DP
+        For each number num, number of 1s = 
+        If n is even, number of 1s in num/2 [num>>1]  
+        If n is odd, number of 1s in nums/2 + 1
+        O(n) solution
+     */
+    public static int[] countingBits(int n) {
+        int[] nbits = new int[n+1];
+
+        for(int i=1; i<=n; i++) {
+            nbits[i] = nbits[i >> 1] + (i & 1);
+            // nbits[i] = nbits[i >> 1] + (i % 2);
+        }
+        return nbits;
+    }
+
     public static void main(String[] args) {
-        int[] nums = countingBits_bruteforce(5);
+        int[] nums = countingBits(5);
         System.out.println(Arrays.toString(nums));
     }
 }
