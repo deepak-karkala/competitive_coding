@@ -72,13 +72,14 @@ public class SinglyLinkedList {
     private static LlNode removeDuplicatesRecursive(LlNode head) {
         if ((head==null) || (head.next==null)) return head;
 
-        
+        head.next = removeDuplicatesRecursive(head.next);
+        return head.data == head.next.data ? head.next : head;
     }
 
 
 
     public static void main(String[] args) {
-        int[] arr = {1,1,2, 2, 2, 3};
+        int[] arr = {1, 1, 2, 2, 2, 3, 4};
         LlNode head = createLinkedList(arr);
         printLinkedList(head);
         head = removeDuplicatesRecursive(head);
