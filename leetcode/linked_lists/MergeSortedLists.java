@@ -71,6 +71,20 @@ class MergeSortedLists {
         return head.next;
     }
 
+
+    private static ListNode mergeTwoListsRecursive(ListNode list1, ListNode list2) {
+        if (list1 == null) return list2;
+        if (list2 == null) return list1;
+
+        if (list1.val <= list2.val) {
+            list1.next = mergeTwoListsRecursive(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = mergeTwoListsRecursive(list1, list2.next);
+            return list2;
+        }
+    }
+
     private static ListNode createSinglyLinkedList(int[] arr) {
         ListNode head = null, next = null, prev = null;
         for(int i=0; i<arr.length; i++) {
@@ -99,7 +113,7 @@ class MergeSortedLists {
         ListNode list1 = createSinglyLinkedList(arr1);
         int[] arr2 = {1, 3, 4};
         ListNode list2 = createSinglyLinkedList(arr2);
-        ListNode head = mergeTwoLists2(list1, list2);
+        ListNode head = mergeTwoListsRecursive(list1, list2);
         printLinkedList(head);
     }
 }
