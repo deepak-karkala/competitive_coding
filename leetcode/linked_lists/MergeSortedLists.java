@@ -50,6 +50,27 @@ class MergeSortedLists {
         return head;
     }
 
+
+    private static ListNode mergeTwoLists2(ListNode list1, ListNode list2) {
+        ListNode head = new ListNode(0), prev = head;
+
+        while( (list1 != null) && (list2 != null)) {
+            if (list1.val <= list2.val) {
+                prev.next = list1;
+                list1 = list1.next;
+            } else {
+                prev.next = list2;
+                list2 = list2.next;
+            }
+            prev = prev.next;
+        }
+
+        if (list1 != null) prev.next = list1;
+        if (list2 != null) prev.next = list2;
+
+        return head.next;
+    }
+
     private static ListNode createSinglyLinkedList(int[] arr) {
         ListNode head = null, next = null, prev = null;
         for(int i=0; i<arr.length; i++) {
@@ -78,7 +99,7 @@ class MergeSortedLists {
         ListNode list1 = createSinglyLinkedList(arr1);
         int[] arr2 = {1, 3, 4};
         ListNode list2 = createSinglyLinkedList(arr2);
-        ListNode head = mergeTwoLists(list1, list2);
+        ListNode head = mergeTwoLists2(list1, list2);
         printLinkedList(head);
     }
 }
