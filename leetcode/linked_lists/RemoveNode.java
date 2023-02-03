@@ -38,11 +38,51 @@ public class RemoveNode {
         }
 
         // Delete node (update next of previous node)
-        if (ptr.next != null) {
-            ptr.next = ptr.next.next;
-        } else {
-            ptr.next = null;
+        ptr.next = ptr.next.next;
+        return dummyHead.next;
+    }
+
+    public static ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode slow = dummyHead, fast = dummyHead;
+
+        int listlen = 0, nodeCounter = 0;
+        while((fast.next != null) && (fast.next.next != null)) {
+            slow = slow.next;
+            fast = fast.next.next;
+            nodeCounter++;
         }
+        // Find listlen
+        listlen = (fast.next == null) ? nodeCounter*2 : nodeCounter*2+1;
+        
+        // Delete node (update next of previous node)
+        slow = dummyHead;
+        nodeCounter = 0;
+        while(nodeCounter < (listlen - n)) {
+            slow = slow.next;
+            nodeCounter++;
+        }
+
+        slow.next = slow.next.next;
+        return dummyHead.next;
+    }
+
+    public static ListNode removeNthFromEndOnePass(ListNode head, int n) {
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode slow = dummyHead, fast = dummyHead;
+
+        // Move fast to n ahead of slow
+        for(int i=0; i<n; i++) fast = fast.next;
+
+        // Move both fast and slow by one, until fast reaches end
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        // At this point, slow is at N-nth node, which is to be removed
+        slow.next = slow.next.next;
+
         return dummyHead.next;
     }
 
@@ -70,9 +110,9 @@ public class RemoveNode {
     }
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5};
+        int[] arr = {1};
         ListNode list = createSinglyLinkedList(arr);
-        ListNode head = removeNthFromEnd1(list, 2);
+        ListNode head = removeNthFromEndOnePass(list, 1);
         printLinkedList(head);
     }
 }
