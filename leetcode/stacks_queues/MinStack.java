@@ -9,7 +9,6 @@ the minimum element in constant time.
 
 import java.util.*;
 
-/*
 class MinStack {
 	private Node head;
 
@@ -54,8 +53,8 @@ class Node {
 		this.next = next;
 	}
 }
-*/
 
+/*
 class MinStack {
 	Stack<Integer> st = new Stack<Integer>();
     int stackmin = Integer.MAX_VALUE;
@@ -92,3 +91,4 @@ class MinStack {
 		System.out.println(obj.getMin());
     }
 }
+*/
