@@ -6,6 +6,7 @@ Easy
 Given a string s, find the first non-repeating character in it and
 return its index. If it does not exist, return -1.
 */
+import java.util.*;
 
 public class FirstUniqueCharacter {
 
@@ -41,7 +42,31 @@ public class FirstUniqueCharacter {
 		return -1;
 	}
 
+	/* Follow up - what if characters are coming in as a stream
+	Solution - use LinkedHashMap
+	Two pass solution won’t work here, store the incoming characters as they come in a
+		Linked Hash-map in the order of occurrence. When it repeats, remove that particular
+		character from Linked hash-map.
+	At the end, return the first element. (That’s why Linked hash-map and not just hash-map
+		since position is not possible in hash-map)
+	*/
+	public static int firstUniqueCharacterStream(String s) {
+		Set<Character> set = new HashSet<Character>();
+		Map<Character, Integer> map = new LinkedHashMap<Character, Integer>();
+
+		for(int i=0; i<s.length(); i++) {
+			char ch = s.charAt(i);
+			if (!set.contains(ch)) {
+				set.add(ch);
+				map.put(ch, i);
+			} else {
+				if(map.get(ch) != null) map.remove(ch);
+			}
+		}
+		return map.size() == 0 ? -1 : map.entrySet().iterator().next().getValue();
+	}
+
 	public static void main(String[] args) {
-		System.out.println(firstUniqueCharacter2("aabb"));
+		System.out.println(firstUniqueCharacterStream("loveleetcode"));
 	}
 }
