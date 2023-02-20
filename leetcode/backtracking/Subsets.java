@@ -78,9 +78,37 @@ public class Subsets {
 	}
 
 
+	/* Backtracking */
+	/*
+	Backtracking Eg: {1,2,3}
+		Go down all the paths, start with empty set
+		At first level, paths are [1], [2], [3]
+			Path/tree of [1]  - will contain all subsets with the element [1]
+			Path/tree of [2]  - will contain all subsets with the element [2] but not [1]
+			Path/tree of [3]  - will contain all subsets with the element [3] but not [1] and not [2]
+		At each level on the way down, add the subset to the final result.
+		On return on the way up, remove the last element added since the parallel path will not
+			contain that element anymore.
+	*/
+	public static List<List<Integer>> subsetsBacktrack(int[] nums) {
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		backtrack(subsets, new ArrayList<Integer>(), nums, 0);
+		return subsets;
+	}
+
+	public static void backtrack(List<List<Integer>> subsets, List<Integer> subset, int[] nums, int start) {
+		subsets.add(new ArrayList<>(subset));
+		for(int i=start; i<nums.length; i++) {
+			subset.add(nums[i]);
+			backtrack(subsets, subset, nums, i+1);
+			subset.remove(subset.size() - 1);
+		}
+	}
+
+
 	public static void main(String[] args) {
 		int[] nums = {1, 2, 3};
-		List<List<Integer>> subsets = subsetsIterative(nums);
+		List<List<Integer>> subsets = subsetsBacktrack(nums);
 		System.out.println(subsets);
 	}
 }
