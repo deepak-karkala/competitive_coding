@@ -63,18 +63,34 @@ public class Subsets {
 		subsets.add(new ArrayList<Integer>());
 		allSubsets.addAll(subsets);
 
-		for(int i=1; i<=nums.length; i++) {
+		for(int i=0; i<nums.length; i++) {
 			List<List<Integer>> newSubsets = new ArrayList<List<Integer>>();
 
 			for(List<Integer> subset: allSubsets) {
 				List<Integer> newSubset = new ArrayList<Integer>();
 				newSubset.addAll(subset);
-				newSubset.add(nums[i-1]);
+				newSubset.add(nums[i]);
 				newSubsets.add(newSubset);
 			}
 			allSubsets.addAll(newSubsets);
 		}
 		return allSubsets;
+	}
+
+	/* Iterative simplified */
+	public static List<List<Integer>> subsetsIterativeSimplified(int[] nums) {
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		subsets.add(new ArrayList<>());
+
+		for(int n: nums) {
+			int size = subsets.size();
+			for(int i=0; i<size; i++){
+				List<Integer> subset = new ArrayList<Integer>(subsets.get(i));
+				subset.add(n);
+				subsets.add(subset);
+			}
+		}
+		return subsets;
 	}
 
 
@@ -108,7 +124,7 @@ public class Subsets {
 
 	public static void main(String[] args) {
 		int[] nums = {1, 2, 3};
-		List<List<Integer>> subsets = subsetsBacktrack(nums);
+		List<List<Integer>> subsets = subsetsIterativeSimplified(nums);
 		System.out.println(subsets);
 	}
 }
