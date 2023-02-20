@@ -122,9 +122,37 @@ public class Subsets {
 	}
 
 
+	/* Alternate backtracking solution - generates different tree than the above */
+	public static List<List<Integer>> subsetsBacktrack2(int[] nums) {
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		backtrack2(subsets, new ArrayList<Integer>(), nums, 0);
+		return subsets;
+	}
+	public static void backtrack2(List<List<Integer>> subsets, List<Integer> subset, int[] nums, int index) {
+		/* Recursion base case (leaf node), this is where all the valid
+		subsets are present, add to final result */
+		if (index == nums.length) {
+			subsets.add(new ArrayList<>(subset));
+			return;
+		}
+
+		/* Two branches at every node
+			1 - nth element is picked
+			2 - nth element is not picked */
+		// 1st branch
+		subset.add(nums[index]);
+		backtrack2(subsets, subset, nums, index+1);
+		subset.remove(subset.size()-1);
+
+		// 2nd branch
+		backtrack2(subsets, subset, nums, index+1);
+		return;
+	}
+
+
 	public static void main(String[] args) {
 		int[] nums = {1, 2, 3};
-		List<List<Integer>> subsets = subsetsIterativeSimplified(nums);
+		List<List<Integer>> subsets = subsetsBacktrack2(nums);
 		System.out.println(subsets);
 	}
 }
