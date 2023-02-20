@@ -55,9 +55,32 @@ public class Subsets {
 		return subsets;
 	}
 
+	/*Iterative - bottom up*/
+	public static List<List<Integer>> subsetsIterative(int[] nums) {
+		List<List<Integer>> allSubsets = new ArrayList<List<Integer>>();
+
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		subsets.add(new ArrayList<Integer>());
+		allSubsets.addAll(subsets);
+
+		for(int i=1; i<=nums.length; i++) {
+			List<List<Integer>> newSubsets = new ArrayList<List<Integer>>();
+
+			for(List<Integer> subset: allSubsets) {
+				List<Integer> newSubset = new ArrayList<Integer>();
+				newSubset.addAll(subset);
+				newSubset.add(nums[i-1]);
+				newSubsets.add(newSubset);
+			}
+			allSubsets.addAll(newSubsets);
+		}
+		return allSubsets;
+	}
+
+
 	public static void main(String[] args) {
 		int[] nums = {1, 2, 3};
-		List<List<Integer>> subsets = subsetsRecursive(nums);
+		List<List<Integer>> subsets = subsetsIterative(nums);
 		System.out.println(subsets);
 	}
 }
