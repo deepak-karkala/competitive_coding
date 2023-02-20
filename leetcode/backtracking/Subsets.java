@@ -150,9 +150,32 @@ public class Subsets {
 	}
 
 
+	/* Combinatorics / Bit manipulation */
+	public static List<List<Integer>> subsetsBitManipulation(int[] nums) {
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		int numSubsets = 1<<nums.length;
+
+		for(int i=0; i<numSubsets; i++) {
+			List<Integer> subset = new ArrayList<Integer>();
+			
+			for(int j=0; j<nums.length; j++) {
+				if ( (i & (1<<j)) != 0)	subset.add(nums[j]);
+			}
+
+			/*
+			int index = 0;
+			for(int k=i; k>0; k=k>>1) {
+				if ((k & 1)==1) subset.add(nums[index]);
+				index++;
+			}*/
+			subsets.add(subset);
+		}
+		return subsets;
+	}
+
 	public static void main(String[] args) {
 		int[] nums = {1, 2, 3};
-		List<List<Integer>> subsets = subsetsBacktrack2(nums);
+		List<List<Integer>> subsets = subsetsBitManipulation(nums);
 		System.out.println(subsets);
 	}
 }
