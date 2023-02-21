@@ -30,9 +30,30 @@ public class SubsetsII {
 		return;
 	}
 
+	public static List<List<Integer>> subsetsIIIterative(int[] nums) {
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		subsets.add(new ArrayList<>());
+		Arrays.sort(nums);
+		int size = subsets.size();
+
+		for(int i=0; i<nums.length; i++) {
+			// If current number is same as previous, skip those earlier subsets (1st half)
+			// to which this number was already added in the previous loop iteration
+			int startSubsetIdx = (i>=1 && nums[i]==nums[i-1]) ? size:0;
+			size = subsets.size();
+
+			for(int j=startSubsetIdx; j<size; j++){
+				List<Integer> subset = new ArrayList<>(subsets.get(j));
+				subset.add(nums[i]);
+				subsets.add(subset);
+			}
+		}
+		return subsets;
+	}
+
 	public static void main(String[] args) {
-		int[] nums = {1, 1, 3};
-		List<List<Integer>> subsets = subsetsIIBacktrack(nums);
+		int[] nums = {1, 2, 2};
+		List<List<Integer>> subsets = subsetsIIIterative(nums);
 		System.out.println(subsets);
 	}
 }
