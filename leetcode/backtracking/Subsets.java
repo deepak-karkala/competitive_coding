@@ -55,7 +55,7 @@ public class Subsets {
 		return subsets;
 	}
 
-	/*Iterative - bottom up*/
+	/*Iterative - bottom up - beats 100%*/
 	public static List<List<Integer>> subsetsIterative(int[] nums) {
 		List<List<Integer>> allSubsets = new ArrayList<List<Integer>>();
 
