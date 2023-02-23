@@ -29,6 +29,8 @@ public class Permutations {
 		}
 	}
 
+	//Approach - recursive1 - given all permutations of first n-1 elements,
+	//add new permutations with nth element.
 	private static List<List<Integer>> permutationsRecursive1(int[] nums) {
 		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
 		subsets = recursive1(nums, nums.length);
@@ -61,9 +63,43 @@ public class Permutations {
 	}
 
 
+	// Approach - recursive2 - given all permutations of length n-1, add
+	// new permutations of len n by adding nth element
+	private static List<List<Integer>> permutationsRecursive2(int[] nums) {
+		return recursive2(nums, nums.length);
+	}
+
+	private static List<List<Integer>> recursive2(int[] nums, int index) {
+		List<List<Integer>> subsets = new ArrayList<List<Integer>>();
+		List<List<Integer>> newSubsets = new ArrayList<List<Integer>>();
+
+		if (index == 1) {
+			for(int num: nums) subsets.add(new ArrayList<>(Arrays.asList(num)));
+			return subsets;
+		}
+
+		// Get all permutations of length index-1
+		subsets = recursive2(nums, index-1);
+
+		// For each subset, add the remaining element(one which is not in hashset already)
+		// to get permutations of length n.
+		int size = subsets.size();
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<nums.length; j++) {
+			Set<Integer> subset = new LinkedHashSet<Integer>(subsets.get(i));
+				if (subset.add(nums[j])) {
+					newSubsets.add(new ArrayList<>(subset));
+				}
+			}
+		}
+
+		return newSubsets;
+	}
+
+
 	public static void main(String[] args) {
 		int[] nums = {1, 2, 3};
-		List<List<Integer>> subsets = permutationsRecursive1(nums);
+		List<List<Integer>> subsets = permutationsRecursive2(nums);
 		System.out.println(subsets);
 	}
 }
