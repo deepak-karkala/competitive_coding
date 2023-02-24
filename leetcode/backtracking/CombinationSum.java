@@ -40,7 +40,7 @@ public class CombinationSum {
 		return;
 	}
 
-	/*
+	
 	// Approach recursive
 	// Given all subsets of len n-1, generate all subsets of len n
 	// For every subset generated, if the sum of the elements == target, add it to final result
@@ -111,11 +111,11 @@ public class CombinationSum {
         }
         return -1;
     }
-	*/
+	
 
 	public static void main(String[] args) {
 		int[] candidates = {2,3,6,7};
 		int target = 7;
-		System.out.println(combinationSumBacktrack(candidates, target));
+		System.out.println(combinationSumRecursive(candidates, target));
 	}
 }
