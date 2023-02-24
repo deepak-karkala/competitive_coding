@@ -27,6 +27,7 @@ public class CombinationSum2 {
 		else if (remain == 0) subsets.add(new ArrayList<>(subset));
 		else {
 			for(int i=start; i<candidates.length; i++) {
+				if (candidates[i] > target) continue;
 				if (i>start && candidates[i]==candidates[i-1]) continue;
 				subset.add(candidates[i]);
 				backtrack(subsets, subset, candidates, remain-candidates[i], i+1);
