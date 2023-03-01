@@ -37,7 +37,7 @@ public class GenerateParentheses {
 		return;
 	}
 
-	/*
+	
 	private static List<String> generateParenthesesRecurse(int n) {
 		List<String> subsets = new ArrayList<String>();
 		List<String> newSubsets = new ArrayList<String>();
@@ -74,7 +74,7 @@ public class GenerateParentheses {
 		String right = s.substring(pos+1, s.length());
 		return left + "()" + right;
 	}
-	*/
+	
 
 	/*
 	private static List<String> generateParenthesesRecurse(int n) {
