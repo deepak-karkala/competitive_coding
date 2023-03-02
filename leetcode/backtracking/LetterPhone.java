@@ -14,6 +14,8 @@ A mapping of digits to letters (just like on the telephone buttons) is given bel
 import java.util.*;
 
 public class LetterPhone {
+	private static final String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
 	private static List<String> letterPhoneBacktrack(String digits) {
 		if (digits.length() == 0 || digits ==null) return new ArrayList<String>();
 		List<String> subsets = new ArrayList<String>();
@@ -27,25 +29,9 @@ public class LetterPhone {
 		} else {
 
 			// Digit to letter mapping
-			char digit = digits.charAt(index);
-			String letters = "";
-			if (digit == '2') {
-				letters = "abc";
-			} else if (digit == '3') {
-				letters = "def";
-			} else if (digit == '4') {
-				letters = "ghi";
-			} else if (digit == '5') {
-				letters = "jkl";
-			} else if (digit == '6') {
-				letters = "mno";
-			} else if (digit == '7') {
-				letters = "pqrs";
-			} else if (digit == '8') {
-				letters = "tuv";
-			} else if (digit == '9') {
-				letters = "wxyz";
-			}
+			//int digit = Character.getNumericValue(digits.charAt(index));
+			//String letters = mapping[digit];
+			String letters = mapping[(digits.charAt(index)) - '0'];
 
 			// Recurse for next digit (all letter combinations)
 			for(int i=0; i<letters.length(); i++) {
