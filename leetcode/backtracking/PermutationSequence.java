@@ -39,25 +39,28 @@ public class PermutationSequence {
 		List<Integer> currentElements = new ArrayList<Integer>();
 		for(int i=0; i<n; i++) currentElements.add(i+1);
 
-		List<Integer> result = new ArrayList<Integer>();
+		StringBuilder sb = new StringBuilder(n);
+
+		// create an array of factorial lookup
+		int[] factorial = new int[n+1];
+	    int sum = 1;
+	    factorial[0] = 1;
+	    for(int i=1; i<=n; i++){
+	        sum *= i;
+	        factorial[i] = sum;
+	    }
 
 		for(int i=0; i<n; i++){
-			// Update the current options (elements to choose from)
-			for(int element: result) {
-				currentElements.remove(Integer.valueOf(element));
-			}
-
 			// Number of subsets to skip
-			int numSubsetsPerBranch = factorial(n-i-1);
-			int elementToBePicked = (int) Math.floor(numSubsetsToSkip/numSubsetsPerBranch);
+			int numSubsetsPerBranch = factorial[n-i-1]; //factorial(n-i-1);
+			//int elementToBePicked = (int) Math.floor(numSubsetsToSkip/numSubsetsPerBranch);
+			int elementToBePicked = numSubsetsToSkip/numSubsetsPerBranch;
 			numSubsetsToSkip -= numSubsetsPerBranch * elementToBePicked;
 
 			// Add element to result
-			result.add(currentElements.get(elementToBePicked));
+			sb.append(String.valueOf(currentElements.get(elementToBePicked)));
+			currentElements.remove(elementToBePicked);
 		}
-		
-		StringBuilder sb = new StringBuilder(n);
-		for(int i=0; i<n; i++) sb.append(""+result.get(i));
 		return sb.toString();
 	}
 
