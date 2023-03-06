@@ -45,7 +45,6 @@ public class GroupAnagrams {
 		return subsets;
 	}
 
-	/*
 	private static List<List<String>> groupAnagramsHashing(String[] strs) {
 		if (strs==null || strs.length==0) return new ArrayList<List<String>>();
 
@@ -61,7 +60,6 @@ public class GroupAnagrams {
 		}
 		return new ArrayList<>(map.values());
 	}
-	*/
 
 	public static void main(String[] args) {
 		String[] strs = {"eat","tea","tan","ate","nat","bat"};
