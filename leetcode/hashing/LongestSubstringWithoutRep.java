@@ -57,7 +57,38 @@ public class LongestSubstringWithoutRep {
 		return Math.max(maxlen, i-startIdx);
 	}
 
+
+	/*
+	Approach: Two pointer with hashing
+		1. Use two pointers: start and end to represent a window.
+		2. Move end to find a valid window.
+		3. When a valid window is found, move start to find a smaller window.
+	*/
+	private static int lengthOfLongestSubstringTemplate(String s) {
+		if (s==null || s.length()==0) return 0;
+		int start=0, end=0, maxLen=0, counter=0;
+		int[] map = new int[128]; // ASCII
+		
+		while(end < s.length()) {
+			// Increment right pointer
+			char c1 = s.charAt(end);
+			if (map[c1] > 0) counter++;
+			map[c1]++;
+			end++;
+
+			while(counter > 0) {
+				char c2 = s.charAt(start);
+				if(map[c2] > 1) counter--;
+				map[c2]--;
+				start++;
+			}
+
+			maxLen = Math.max(maxLen, end-start);
+		}
+		return maxLen;
+	}
+
 	public static void main(String[] args) {
-		System.out.println(lengthOfLongestSubstring("pwwkew"));
+		System.out.println(lengthOfLongestSubstringTemplate("dvdf"));
 	}
 }
