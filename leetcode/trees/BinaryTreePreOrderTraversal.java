@@ -38,7 +38,11 @@ public class BinaryTreePreOrderTraversal {
 		return;
     }
 
-    /* Iterative - using stack to traverse all nodes */
+    /* Iterative - using stack to traverse all nodes 
+		Use stack, keep pushing nodes in required order.
+		Iterate till stack is not empty
+		Pop and add node’s value to List<Integer>
+    */
     public static List<Integer> preorderTraversalIterative(TreeNode root) {
     	List<Integer> list = new ArrayList<Integer>();
     	Deque<TreeNode> stack = new LinkedList<TreeNode>();
