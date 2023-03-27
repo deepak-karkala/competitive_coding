@@ -28,13 +28,13 @@ public class BinaryTreePreOrderTraversal {
         return list;
     }
 
-    public static TreeNode preorderTraversalRecurse(TreeNode root, List<Integer> list) {
+    public static void preorderTraversalRecurse(TreeNode root, List<Integer> list) {
     	if (root != null){
             list.add(root.val);
-			TreeNode left = preorderTraversalRecurse(root.left, list);
-			TreeNode right = preorderTraversalRecurse(root.right, list);
+			preorderTraversalRecurse(root.left, list);
+			preorderTraversalRecurse(root.right, list);
 		}
-		return root;
+		return;
     }
 
     public static void main(String[] args){
