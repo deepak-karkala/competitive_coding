@@ -22,6 +22,7 @@ class TreeNode {
 }
  
 public class BinaryTreePreOrderTraversal {
+	/* Recursive */
     public static List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<Integer>();
         preorderTraversalRecurse(root, list);
@@ -37,11 +38,28 @@ public class BinaryTreePreOrderTraversal {
 		return;
     }
 
+    /* Iterative - using stack to traverse all nodes */
+    public static List<Integer> preorderTraversalIterative(TreeNode root) {
+    	List<Integer> list = new ArrayList<Integer>();
+    	Deque<TreeNode> stack = new LinkedList<TreeNode>();
+    	stack.push(root);
+    	
+    	while(!stack.isEmpty()) {
+    		TreeNode node = stack.pop();
+    		if (node != null) {
+    			list.add(node.val);
+    			stack.push(node.right);
+    			stack.push(node.left);
+    		}
+    	}
+    	return list;
+    }
+
     public static void main(String[] args){
-    	TreeNode left = new TreeNode();
+    	TreeNode left = new TreeNode(4, null, null);
     	TreeNode right = new TreeNode(2, new TreeNode(3), null);
-    	TreeNode root = new TreeNode(1, null, right);
-    	List<Integer> list = preorderTraversal(root);
+    	TreeNode root = new TreeNode(1, left, right);
+    	List<Integer> list = preorderTraversalIterative(root);
     	System.out.println(list);
     }
 }
