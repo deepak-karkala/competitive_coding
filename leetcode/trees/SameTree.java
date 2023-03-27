@@ -35,9 +35,20 @@ public class SameTree {
 		List<Integer> qlist = new ArrayList<>();
 
 		preorderTraversalRecurse(p, plist);
-		preorderTraversalRecurse(p, qlist);
+		preorderTraversalRecurse(q, qlist);
 
 		return plist.equals(qlist);
+	}
+
+	public static void preorderTraversalRecurse(TreeNode root, List<Integer> list){
+		if (root != null) {
+			list.add(root.val);
+			preorderTraversalRecurse(root.left, list);
+			preorderTraversalRecurse(root.right, list);
+		} else {
+			list.add(Integer.MAX_VALUE);
+		}
+		return;
 	}
 
 	/* Iterative using stack
@@ -88,12 +99,12 @@ public class SameTree {
 	public static void main(String[] args){
 		TreeNode left1 = new TreeNode(2, null, null);
     	TreeNode right1 = new TreeNode(3, null, null);
-    	TreeNode p = new TreeNode(1, left1, right1);
+    	TreeNode p = new TreeNode(1, new TreeNode(2), null);
 
-    	TreeNode left2 = new TreeNode(2, null, null);
-    	TreeNode right2 = new TreeNode(3, null, null);
-    	TreeNode q = new TreeNode(1, right2, left2);
+    	TreeNode left2 = new TreeNode();
+    	TreeNode right2 = new TreeNode(2, new TreeNode(3), null);
+    	TreeNode q = new TreeNode(1, null, new TreeNode(2));
 
-    	System.out.println(isSameTreeIterative(p, q));
+    	System.out.println(isSameTreeRecursive(p, q));
 	}
 }
