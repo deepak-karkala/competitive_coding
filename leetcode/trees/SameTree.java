@@ -28,6 +28,24 @@ class TreeNode {
 public class SameTree {
 
 	/* Recursive
+	*/
+	public static boolean isSameTree(TreeNode p, TreeNode q) {
+		// Base case - both at leaf level
+		if (p==null && q==null) return true;
+		
+		// If only one of them is null, return false (not same tree)
+		if (p==null || q==null) return false;
+		
+		// Now we come to case of both not being null
+		// Now check for value equality
+		if (p.val != q.val) return false;
+		
+		// Now both are not null and values match at this level
+		// Now check for left and right subtree equality
+		return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+	}
+
+	/* Recursive
 		Compare the equality of Pre-order traversals of both trees
 	*/
 	public static boolean isSameTreeRecursive(TreeNode p, TreeNode q) {
@@ -105,6 +123,6 @@ public class SameTree {
     	TreeNode right2 = new TreeNode(2, new TreeNode(3), null);
     	TreeNode q = new TreeNode(1, null, new TreeNode(2));
 
-    	System.out.println(isSameTreeRecursive(p, q));
+    	System.out.println(isSameTree(p, q));
 	}
 }
