@@ -41,15 +41,20 @@ public class BinaryTreeInOrderTraversal {
 	public static List<Integer> inOrderTraversalIterative(TreeNode root) {
 		List<Integer> list = new ArrayList<Integer>();
 		Deque<TreeNode> stack = new LinkedList<TreeNode>();
-		stack.push(root);
+		TreeNode curr = root;
 
-		while(!stack.isEmpty()){
-			TreeNode node = stack.pop();
-			if (node != null) {
-				list.add(node.val);
-				stack.push(node.right);
-				stack.push(node.left);
+		while(curr!=null || !stack.isEmpty()){
+			while(curr != null){
+				stack.push(curr);
+				curr = curr.left;
 			}
+			curr = stack.pop();
+			list.add(curr.val);
+			curr = curr.right;
+		}
+		int[] arr = new int[list.size()];
+		for(int i=0; i<list.size(); i++) {
+			arr[i] = list.get(i);
 		}
 		return list;
 	}
