@@ -24,6 +24,7 @@ class TreeNode {
 
 public class InvertBinaryTree {
 
+	// Recursive - DFS
 	public static TreeNode invertTree(TreeNode root) {
 		if (root != null){
 			TreeNode temp = root.left;
@@ -31,6 +32,24 @@ public class InvertBinaryTree {
 			root.right = temp;
 			invertTree(root.left);
 			invertTree(root.right);
+		}
+		return root;
+	}
+
+	// Iterative
+	public static TreeNode invertTreeIterative(TreeNode root) {
+		Deque<TreeNode> stack = new LinkedList<>();
+		stack.push(root);
+
+		while(!stack.isEmpty()) {
+			TreeNode node = stack.pop();
+			if (node != null){
+				TreeNode temp = node.left;
+				node.left = node.right;
+				node.right = temp;
+				stack.push(node.left);
+				stack.push(node.right);
+			}
 		}
 		return root;
 	}
@@ -55,7 +74,7 @@ public class InvertBinaryTree {
     	TreeNode right = new TreeNode(7, new TreeNode(6), new TreeNode(9));
     	TreeNode root = new TreeNode(4, left, right);
     	System.out.println(inOrderTraversal(root));
-    	TreeNode invert = invertTree(root);
+    	TreeNode invert = invertTreeIterative(root);
     	System.out.println(inOrderTraversal(invert));
 	}
 }
