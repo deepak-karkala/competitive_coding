@@ -33,16 +33,10 @@ public class BinaryTreeRightView {
 
 		while(!queue.isEmpty()){
 
-			TreeNode rightModeNode = queue.poll();
-			list.add(rightModeNode.val);
-
 			int size = queue.size();
-
-			if (rightModeNode.right != null) queue.offer(rightModeNode.right);
-			if (rightModeNode.left != null) queue.offer(rightModeNode.left);
-
 			for(int i=0; i<size; i++) {
 				TreeNode node = queue.poll();
+				if (i==0) list.add(node.val);
 				if (node.right != null) queue.offer(node.right);
 				if (node.left != null) queue.offer(node.left);
 			}
