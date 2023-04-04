@@ -49,19 +49,30 @@ public class BinaryTreeLevelOrderTraversal2 {
 	private static List<List<Integer>> levelOrderBottomRecursive(TreeNode root) {
 		List<List<Integer>> list = new ArrayList<List<Integer>>();
 		if (root == null) return list;
-
+		levelOrderBottomRecurse(root, list, 0);
+		return list;
 	}
 
 	private static void levelOrderBottomRecurse(TreeNode root, List<List<Integer>> list, int level) {
 		if (root == null) return;
 
-		if 
+		if (list.size() == level) {
+			List<Integer> listLevel = new ArrayList<Integer>();
+			listLevel.add(root.val);
+			list.add(0, listLevel);
+		} else {
+			list.get(list.size()-level-1).add(root.val);
+		}
+		levelOrderBottomRecurse(root.left, list, level+1);
+		levelOrderBottomRecurse(root.right, list, level+1);
+
+		return;
 	}
 
 	public static void main(String[] args) {
     	TreeNode left = new TreeNode(9, null, null);
     	TreeNode right = new TreeNode(20, new TreeNode(15), new TreeNode(7));
     	TreeNode root = new TreeNode(3, left, right);
-    	System.out.println(levelOrderBottomIterative(root));
+    	System.out.println(levelOrderBottomRecursive(root));
     }
 }
