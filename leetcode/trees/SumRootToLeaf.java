@@ -30,6 +30,7 @@ class TreeNode {
 }
  
 public class SumRootToLeaf {
+	// Backtrack
 	private static int sumNumbers(TreeNode root) {
 		int sumCurrPath = 0;
 		ArrayList<Integer> sumPaths = new ArrayList<Integer>();
@@ -58,11 +59,59 @@ public class SumRootToLeaf {
 		return;
 	}
 
+	// Recursive
+	private static int sumNumbersRecursive(TreeNode root) {
+		return sumNumbersRecurse(root, 0);
+	}
+
+	private static int sumNumbersRecurse(TreeNode root, int sum) {
+		if (root == null) return 0;
+		// If leaf node, return sum of path
+		if (root.left==null && root.right==null) return sum*10 + root.val;
+		return sumNumbersRecurse(root.right, sum*10 + root.val) + sumNumbersRecurse(root.left, sum*10 + root.val);
+	}
+
+
+	/*
+	// Iterative with stack
+	private static int sumNumbersIterative(TreeNode root) {
+		Deque<TreeNode> stackNode = new LinkedList<TreeNode>();
+		Deque<String> stackPath = new LinkedList<String>();
+		int sumAllPaths = 0;
+
+		stackNode.push(root);
+		stackPath.push(""+root.val);
+
+		while(!stackNode.isEmpty()) {
+			TreeNode node = stackNode.pop();
+			String currPath = stackPath.pop();
+
+			// If leaf node, update final result
+			if (node.left==null && node.right==null) {
+				sumAllPaths += Integer.valueOf(currPath);
+			}
+
+			if (node.left != null) {
+				stackNode.push(node.left);
+				stackPath.push(currPath+node.left.val);
+			}
+
+			if (node.right != null) {
+				stackNode.push(node.right);
+				stackPath.push(currPath+node.right.val);
+			}
+		}
+		return sumAllPaths;
+	}
+	*/
+
 	public static void main(String[] args) {
     	TreeNode left = new TreeNode(9, new TreeNode(5), new TreeNode(1));
     	TreeNode right = new TreeNode(0, null, null);
     	TreeNode root = new TreeNode(4, left, right);
-    	System.out.println(sumNumbers(root));
+    	TreeNode root1 = new TreeNode(1, new TreeNode(0), null);
+
+    	System.out.println(sumNumbersIterative(root));
     }
 
 }
