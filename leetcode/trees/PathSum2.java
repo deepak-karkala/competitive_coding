@@ -27,7 +27,7 @@ class TreeNode {
 }
  
 public class PathSum2 {
-	private static List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+	private static List<List<Integer>> pathSumBacktrack1(TreeNode root, int targetSum) {
 		List<List<Integer>> sets = new ArrayList<List<Integer>>();
 		if (root == null) return sets;
 
@@ -57,16 +57,41 @@ public class PathSum2 {
 			if (node.left != null) {
 				subset.add(node.left);
 				backtrack(sets, subset, targetSum);
-				subset.remove(node.left);
+				subset.remove(subset.size()-1);
 			}
 
 			// Add right subtree and backtrack
 			if (node.right != null) {
 				subset.add(node.right);
 				backtrack(sets, subset, targetSum);
-				subset.remove(node.right);
+				subset.remove(subset.size()-1);
 			}
 		}
+		return;
+	}
+
+
+	private static List<List<Integer>> pathSumBacktrack2(TreeNode root, int targetSum) {
+		List<List<Integer>> sets = new ArrayList<List<Integer>>();
+		List<Integer> subset = new ArrayList<Integer>();
+		if (root == null) return sets;
+		backtrack2(root, sets, subset, targetSum);
+		return sets;
+	}
+
+	private static void backtrack2(TreeNode node, List<List<Integer>> sets, List<Integer> subset, int remainingSum) {
+		if (node == null) return;
+		subset.add(node.val);
+
+		// check if leaf node is reached (the last node added in subset)
+		if (node.val == remainingSum && node.left == null && node.right == null) {
+			sets.add(new ArrayList<>(subset));
+		} else {
+			// Add left subtree and backtrack
+			backtrack2(node.left, sets, subset, remainingSum - node.val);
+			backtrack2(node.right, sets, subset, remainingSum - node.val);
+		}
+		subset.remove(subset.size()-1);
 		return;
 	}
 
@@ -74,6 +99,6 @@ public class PathSum2 {
     	TreeNode left = new TreeNode(4, new TreeNode(11, new TreeNode(7), new TreeNode(2)), null);
     	TreeNode right = new TreeNode(8, new TreeNode(13), new TreeNode(4, new TreeNode(5), new TreeNode(1)));
     	TreeNode root = new TreeNode(5, left, right);
-    	System.out.println(pathSum(root, 22));
+    	System.out.println(pathSumBacktrack1(root, 22));
     }
 }
