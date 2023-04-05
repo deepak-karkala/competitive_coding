@@ -72,7 +72,6 @@ public class SumRootToLeaf {
 	}
 
 
-	/*
 	// Iterative with stack
 	private static int sumNumbersIterative(TreeNode root) {
 		Deque<TreeNode> stackNode = new LinkedList<TreeNode>();
@@ -103,7 +102,6 @@ public class SumRootToLeaf {
 		}
 		return sumAllPaths;
 	}
-	*/
 
 	public static void main(String[] args) {
     	TreeNode left = new TreeNode(9, new TreeNode(5), new TreeNode(1));
