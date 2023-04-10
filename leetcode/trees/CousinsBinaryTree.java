@@ -27,7 +27,6 @@ class TreeNode {
 }
 
 public class CousinsBinaryTree {
-	/*
 	// Recursive
 	static TreeNode xParent, yParent;
 	static int xDepth=-1, yDepth=-1;
@@ -51,7 +50,6 @@ public class CousinsBinaryTree {
 			getDepthAndParent(root.right, level+1, x, y, root);
 		}
     }
-	*/
 
 	// Iterative
 	private static boolean isCousinsIterative(TreeNode root, int x, int y) {
