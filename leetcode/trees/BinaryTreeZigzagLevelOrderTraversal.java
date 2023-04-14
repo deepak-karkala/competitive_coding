@@ -89,10 +89,34 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 		return list;
 	}
 
+	// Recursive
+	private static List<List<Integer>> zigzagLevelOrderRecursive(TreeNode root) {
+		List<List<Integer>> list = new ArrayList<List<Integer>>();
+		if (root == null) return list;
+		zigzagLevelOrderRecurse(root, list, 0);
+		return list;
+	}
+
+	private static void zigzagLevelOrderRecurse(TreeNode node, List<List<Integer>> list, int level) {
+		if (node == null) return;
+
+		if (list.size() == level) {
+			List<Integer> levelList = new ArrayList<Integer>();
+			levelList.add(node.val);
+			list.add(new ArrayList<>(levelList));
+		} else {
+			if (level%2==0) list.get(level).add(0, node.val);
+			else list.get(level).add(node.val);
+		}
+		zigzagLevelOrderRecurse(node.right, list, level+1);
+		zigzagLevelOrderRecurse(node.left, list, level+1);
+		return;
+	}
+
 	public static void main(String[] args) {
     	TreeNode left = new TreeNode(9, new TreeNode(5), new TreeNode(4));
     	TreeNode right = new TreeNode(20, new TreeNode(15), new TreeNode(7));
     	TreeNode root = new TreeNode(3, left, right);
-    	System.out.println(zigzagLevelOrderIterative2(root));
+    	System.out.println(zigzagLevelOrderRecursive(root));
     }
 }
