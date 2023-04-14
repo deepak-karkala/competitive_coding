@@ -62,7 +62,6 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 		return list;
 	}
 
-	/*
 	// Iterative using single queue
 	private static List<List<Integer>> zigzagLevelOrderIterative2(TreeNode root) {
 		List<List<Integer>> list = new ArrayList<List<Integer>>();
@@ -89,7 +88,6 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 		}
 		return list;
 	}
-	*/
 
 	public static void main(String[] args) {
     	TreeNode left = new TreeNode(9, new TreeNode(5), new TreeNode(4));
