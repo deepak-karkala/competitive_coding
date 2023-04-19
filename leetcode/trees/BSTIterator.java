@@ -23,7 +23,9 @@ class TreeNode {
 }
  
 public class BSTIterator {
-	// Naive
+
+	/*
+	// Naive (Time: O(1) Space:O(n))
 	ArrayList<Integer> list = new ArrayList<Integer>();
 	int pointer = 0;
 	public BSTIterator(TreeNode root) {
@@ -46,7 +48,30 @@ public class BSTIterator {
     public boolean hasNext() {
     	return pointer < list.size();
     }
+	*/
 
+	// Optimal: Time:O(1) Space:O(h)
+	private Deque<TreeNode> stack;
+	private TreeNode node;
+
+	public BSTIterator(TreeNode root) {
+		stack = new LinkedList<>();
+		node = root;
+    }
+    
+    public int next() {
+    	while(node != null) {
+    		stack.push(node);
+    		node = node.left;
+    	}
+    	TreeNode next = stack.pop();
+    	node = next.right;
+    	return next.val;
+    }
+    
+    public boolean hasNext() {
+    	return node!=null || !stack.isEmpty();
+    }
 
     public static void main(String[] args) {
     	TreeNode left = new TreeNode(3, null, null);
