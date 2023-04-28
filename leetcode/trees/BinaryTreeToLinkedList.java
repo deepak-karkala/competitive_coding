@@ -69,7 +69,23 @@ public class BinaryTreeToLinkedList {
 		return prev;
 	}
 
-	
+	//Iterative (using stack to keep track of prev)
+	private static TreeNode flattenIterative(TreeNode root) {
+		Deque<TreeNode> stack = new LinkedList<TreeNode>();
+		stack.push(root);
+
+		while(!stack.isEmpty()) {
+			TreeNode node = stack.pop();
+			if (node == null) continue;
+			if (node.right != null) stack.push(node.right);
+			if (node.left != null) stack.push(node.left);
+
+			node.right = stack.peek();
+			node.left = null;
+		}
+		return root;
+	}
+
 	private static void inOrderTraversal(TreeNode root) {
 		if (root == null) return;
 		System.out.println(root.val);
@@ -83,6 +99,6 @@ public class BinaryTreeToLinkedList {
     	TreeNode right = new TreeNode(5, null, new TreeNode(6));
     	TreeNode root = new TreeNode(1, left, right);
     	//inOrderTraversal((root));
-    	inOrderTraversal(flattenRecursive(root));
+    	inOrderTraversal(flattenIterative(root));
     }
 }
