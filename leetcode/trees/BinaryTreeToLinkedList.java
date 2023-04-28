@@ -28,7 +28,7 @@ class TreeNode {
  
 public class BinaryTreeToLinkedList {
 	private static TreeNode flatten(TreeNode root) {
-		recurse(root);
+		recurse1(root);
 		return root;
 	}
 
@@ -36,12 +36,12 @@ public class BinaryTreeToLinkedList {
 	// Space: O(n) since it is in-place
 	// Time: O(n*h) because of finding rightMostInLeftSubtree for every node
 	// 		Best case time: O(nlogn), Worst case: O(n^2)
-	private static TreeNode recurse(TreeNode node) {
+	private static TreeNode recurse1(TreeNode node) {
 		if (node == null) return null;
 		if (node.left==null && node.right==null) return node;
 
-		TreeNode rightMostInLeftSubtree = recurse(node.left);
-		TreeNode tmp = recurse(node.right);
+		TreeNode rightMostInLeftSubtree = recurse1(node.left);
+		TreeNode tmp = recurse1(node.right);
 
 		if (rightMostInLeftSubtree != null) {
 			rightMostInLeftSubtree.right = node.right;
@@ -53,6 +53,23 @@ public class BinaryTreeToLinkedList {
 		return node;
 	}
 
+	// Recursion
+	private static TreeNode flattenRecursive(TreeNode root) {
+		recurse2(root, null);
+		return root;
+	}
+	private static TreeNode recurse2(TreeNode node, TreeNode prev) {
+		if (node == null) return prev;
+
+		prev = recurse2(node.right, prev);
+		prev = recurse2(node.left, prev);
+		node.right = prev;
+		node.left = null;
+		prev = node;
+		return prev;
+	}
+
+	
 	private static void inOrderTraversal(TreeNode root) {
 		if (root == null) return;
 		System.out.println(root.val);
@@ -66,6 +83,6 @@ public class BinaryTreeToLinkedList {
     	TreeNode right = new TreeNode(5, null, new TreeNode(6));
     	TreeNode root = new TreeNode(1, left, right);
     	//inOrderTraversal((root));
-    	inOrderTraversal(flatten(root));
+    	inOrderTraversal(flattenRecursive(root));
     }
 }
