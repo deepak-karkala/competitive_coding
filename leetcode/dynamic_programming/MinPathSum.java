@@ -43,8 +43,30 @@ class MinPathSum {
     	}
     }
 
+    public static int minPathSumTopDown(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] sum = new int[m][n];
+        
+        return minPathSumMemo(grid, m-1, n-1, sum);
+    }
+
+    public static int minPathSumMemo(int[][] grid, int row, int col, int[][] sum) {
+        // Memoization (return sum if previously computed)
+        if (sum[row][col] != 0) return sum[row][col];
+
+        // Base cases: First row, first column
+        if (row==0 && col==0) return sum[row][col] = grid[row][col];
+        if (row == 0) return sum[row][col] = minPathSumMemo(grid, row, col-1, sum) + grid[row][col];
+        if (col == 0) return sum[row][col] = minPathSumMemo(grid, row-1, col, sum) + grid[row][col];
+
+        // Recursion
+        return sum[row][col] = Math.min(minPathSumMemo(grid, row-1, col, sum), minPathSumMemo(grid, row, col-1, sum)) + grid[row][col];
+    }
+
+
     public static void main(String[] args) {
     	int[][] grid = { {1,3,1}, {1,5,1}, {4,2,1} };
-    	System.out.println(minPathSum(grid));
+    	System.out.println(minPathSumTopDown(grid));
     }
 } 
