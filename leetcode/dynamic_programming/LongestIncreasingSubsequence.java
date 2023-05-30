@@ -33,7 +33,6 @@ class LongestIncreasingSubsequence {
     	return maxLenEndingAtI;
     }
 
-    /*
     // DP: Bottom up
     private static int lengthOfLIS_dp_bottomup(int[] nums) {
     	// Bottom up
@@ -52,11 +51,9 @@ class LongestIncreasingSubsequence {
     	}
     	return maxLen;
     }
-    */
-
 
     public static void main(String[] args) {
     	int[] arr = {10,9,2,5,3,7,101,18};
-    	System.out.println(lengthOfLIS_recursion(arr));
+    	System.out.println(lengthOfLIS_dp_bottomup(arr));
     }
 }
