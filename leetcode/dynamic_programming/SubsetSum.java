@@ -38,6 +38,7 @@ class SubsetSum {
 	}
 
 	// Method 2: DP: Recursive with top down
+	// Time: O(N*sum), Space: O(N*sum)
 	private static boolean subsetsum_dp_memo_top(int[] arr, int sum) {
 		int n = arr.length;
 		int[][] memo = new int[n+1][sum+1];
@@ -72,11 +73,34 @@ class SubsetSum {
 		return is_subset_sum;
 	}
 
+	// Method 3: DP Bottom up iterative
+	// Time: O(N*sum), Space: O(N*sum)
+	// Space can be optimised to O(sum) since at any point only n-1th row is needed
+	private static boolean subsetsum_dp_bottomup(int[] arr, int sum) {
+		int n = arr.length;
+		boolean[][] memo = new boolean[n+1][sum+1];
+
+		// For sum=0, set memo=true for all n
+		for(int i=0; i<=n; i++) memo[i][0] = true;
+
+		// For n=0, set memo=false for all sum
+		for(int j=0; j<=sum; j++) memo[0][j] = false;
+
+		for(int i=1; i<=n; i++) {
+			for(int j=1; j<=sum; j++) {
+
+				if (arr[i-1] > j) memo[i][j] = memo[i-1][j];
+				else memo[i][j] = memo[i-1][j] || memo[i-1][j-arr[i-1]];
+			}
+		}
+		return memo[n][sum];
+	}
+
 	public static void main(String[] args){
-		//int[] arr = {3, 34, 4, 12, 5, 2, 7, 1};
-		int[] arr = {1, 2, 35};
+		int[] arr = {3, 34, 4, 12, 5, 2, 7, 1};
+		//int[] arr = {1, 2, 35};
 		int sum = 10;
-		boolean isSubsetWithSum = subsetsum_dp_memo_top(arr, sum);
+		boolean isSubsetWithSum = subsetsum_dp_bottomup(arr, sum);
 		System.out.println(isSubsetWithSum);
 	}
 }
