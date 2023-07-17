@@ -37,10 +37,46 @@ class SubsetSum {
 		return isSubsetWithSum1 || isSubsetWithSum2;
 	}
 
+	// Method 2: DP: Recursive with top down
+	private static boolean subsetsum_dp_memo_top(int[] arr, int sum) {
+		int n = arr.length;
+		int[][] memo = new int[n+1][sum+1];
+		for(int i=0; i<=n; i++) {
+			for(int j=0; j<=sum; j++) {
+				memo[i][j] = -1;
+			}
+		}
+		return subsetsum_dp_memo(arr, n, sum, memo);
+	}
+
+	private static boolean subsetsum_dp_memo(int[] arr, int n, int remaining_sum, int[][] memo) {
+		// DP: Return memoized value
+		if (memo[n][remaining_sum] != -1){
+			return memo[n][remaining_sum] == 1;	
+		} 
+
+		if (remaining_sum == 0) return true;
+		if (n == 0) return false;
+
+		if (arr[n-1] > remaining_sum) {
+			boolean is_subset_sum = subsetsum_dp_memo(arr, n-1, remaining_sum, memo);
+			if (is_subset_sum) memo[n][remaining_sum] = 1;
+			else memo[n][remaining_sum] = 0;
+			return is_subset_sum;
+		}
+
+		boolean is_subset_sum = subsetsum_dp_memo(arr, n-1, remaining_sum, memo) || 
+			subsetsum_dp_memo(arr, n-1, remaining_sum-arr[n-1], memo);
+		if (is_subset_sum) memo[n][remaining_sum] = 1;
+		else memo[n][remaining_sum] = 0;
+		return is_subset_sum;
+	}
+
 	public static void main(String[] args){
-		int[] arr = {3, 34, 4, 12, 5, 2, 7, 1};
+		//int[] arr = {3, 34, 4, 12, 5, 2, 7, 1};
+		int[] arr = {1, 2, 35};
 		int sum = 10;
-		boolean isSubsetWithSum = subsetsum_recursive_top(arr, sum);
+		boolean isSubsetWithSum = subsetsum_dp_memo_top(arr, sum);
 		System.out.println(isSubsetWithSum);
 	}
 }
