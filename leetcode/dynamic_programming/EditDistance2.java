@@ -66,7 +66,8 @@ class EditDistance2 {
 		if (s1.charAt(m-1) == s2.charAt(n-1)) {
 			return memo[m][n] = editdistance_dp_memo(s1, s2, m-1, n-1, memo);
 		}
-		int tmp = Math.min(editdistance_dp_memo(s1, s2, m-1, n, memo), editdistance_dp_memo(s1, s2, m, n-1, memo));
+		int tmp = Math.min(editdistance_dp_memo(s1, s2, m-1, n, memo),
+			editdistance_dp_memo(s1, s2, m, n-1, memo));
 		return memo[m][n] = Math.min(tmp, editdistance_dp_memo(s1, s2, m-1, n-1, memo)) + 1;
 	}
 

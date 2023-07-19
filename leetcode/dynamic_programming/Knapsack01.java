@@ -25,7 +25,8 @@ class Knapsack01 {
 		//	b. Don't pick this iteam and remaining weight remains same
 		// We need to choose max of these 2 options
 		if (w[n] < W) {
-			return Math.max(v[n] + knapsack_recursive_bf(v, w, W-w[n], n-1), knapsack_recursive_bf(v, w, W, n-1));
+			return Math.max(v[n] + knapsack_recursive_bf(v, w, W-w[n], n-1),
+				knapsack_recursive_bf(v, w, W, n-1));
 		}
 		// If current item's weight is more than remaining weight, we cannot choose this item,
 		//return the best value with n-1 items
@@ -56,7 +57,8 @@ class Knapsack01 {
 
 		// If current item's weight is less than weight remaining,
 		if (w[n] < W) {
-			return memo[n][W] = Math.max(v[n] + knapsack_dp_memo(v, w, W-w[n], n-1, memo), knapsack_dp_memo(v, w, W, n-1, memo));
+			return memo[n][W] = Math.max(v[n] + knapsack_dp_memo(v, w, W-w[n], n-1, memo),
+				knapsack_dp_memo(v, w, W, n-1, memo));
 		}
 
 		// If current item's weight is more than weight remaining, this item cannot be picked,
