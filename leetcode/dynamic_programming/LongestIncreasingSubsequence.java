@@ -91,13 +91,6 @@ class LongestIncreasingSubsequence {
                 return mid;
             }
         }
-        if (false) {
-            System.out.println("***");
-            for (int x: arr) System.out.println(x);
-            System.out.println(key);
-            System.out.println(result);
-            System.out.println("***");
-        }
         return result;
     }
 
