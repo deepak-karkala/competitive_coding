@@ -7,10 +7,11 @@ Companies
 Given an integer array nums, return the length of the longest strictly increasing 
 subsequence
 */
+import java.util.*;
 
 class LongestIncreasingSubsequence {
 
-	// Recursion
+	// Recursion - Time: O(2^N) Space: O(N)
     private static int lengthOfLIS_recursion(int[] nums) {
     	int maxLen = 0;
     	for(int i=0; i<nums.length; i++) {
@@ -33,7 +34,7 @@ class LongestIncreasingSubsequence {
     	return maxLenEndingAtI;
     }
 
-    // DP: Bottom up
+    // DP: Bottom up Time: O(N^2) Space: O(N)
     private static int lengthOfLIS_dp_bottomup(int[] nums) {
     	// Bottom up
     	int[] maxLenEndingAtI = new int[nums.length];
@@ -52,8 +53,56 @@ class LongestIncreasingSubsequence {
     	return maxLen;
     }
 
+    // Greedy with binary Search Time: O(N*logN) Space: O(N)
+    private static int lengthOfLIS_greedy_binarysearch(int[] nums) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int tail = Integer.MIN_VALUE;
+
+        for(int i=0; i<nums.length; i++) {
+            int curr = nums[i];
+
+            // If current element > tail, append
+            // else, replace smallest element greater than curr
+            if (curr > tail) {
+                list.add(curr);
+            } else {
+                int[] arr = list.stream().mapToInt(j -> j).toArray();
+                int indexOfSmallestElementGreaterThanKey = binarysearch_greaterthan(arr, 0, list.size()-1, curr);
+                list.set(indexOfSmallestElementGreaterThanKey, curr);
+            }
+            tail = list.get(list.size()-1);
+            //for (int x: list) System.out.println(x);
+            //System.out.println("---");
+        }
+        //for (int x: list) System.out.println(x);
+        return list.size();
+    }
+
+    private static int binarysearch_greaterthan(int[] arr, int low, int high, int key) {
+        int result = 0;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] > key) {
+                result = mid;
+                high = mid - 1;
+            } else if (arr[mid] < key) {
+                low = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        if (false) {
+            System.out.println("***");
+            for (int x: arr) System.out.println(x);
+            System.out.println(key);
+            System.out.println(result);
+            System.out.println("***");
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
     	int[] arr = {10,9,2,5,3,7,101,18};
-    	System.out.println(lengthOfLIS_dp_bottomup(arr));
+    	System.out.println(lengthOfLIS_greedy_binarysearch(arr));
     }
 }
