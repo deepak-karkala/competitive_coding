@@ -61,7 +61,8 @@ class MinPathSum {
         if (col == 0) return sum[row][col] = minPathSumMemo(grid, row-1, col, sum) + grid[row][col];
 
         // Recursion
-        return sum[row][col] = Math.min(minPathSumMemo(grid, row-1, col, sum), minPathSumMemo(grid, row, col-1, sum)) + grid[row][col];
+        return sum[row][col] = Math.min(minPathSumMemo(grid, row-1, col, sum), 
+            minPathSumMemo(grid, row, col-1, sum)) + grid[row][col];
     }
 
 
