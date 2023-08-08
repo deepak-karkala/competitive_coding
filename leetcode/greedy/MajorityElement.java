@@ -17,7 +17,7 @@ class MajorityElement {
 
 	// Hashmap
 	// Time: O(n) Space:O(n)
-	private static int majorityElement(int[] nums) {
+	private static int majorityElement_hashmap(int[] nums) {
 		HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
 		int me = 0;
 		for(int num: nums) {
@@ -38,9 +38,37 @@ class MajorityElement {
 		return me;
     }
 
+    // Sorting
+    // Time: O(nlogn) Space: O(1)
+	private static int majorityElement_sorting(int[] nums) {
+		Arrays.sort(nums);
+		return nums[nums.length/2];
+	}
+
+	// Moore voting
+	// Given: majority element occurs >len/2 number of times
+	// Keep incrementing if majoirty element and decrementing if not
+	// If count =0 it implies potential for new majority element
+	// Time: O(n) Space: O(1)
+	private static int majorityElement_voting(int[] nums) {
+		int me = nums[0], count = 0;
+
+		for(int num: nums) {
+			if (count == 0) {
+				me = num;
+				count++;
+			} else if (num == me) {
+				count++;
+			} else {
+				count--;
+			}
+		}
+		return me;
+	}
+
 	public static void main(String[] args) {
 		int[] nums = {2,2,1,1,1,2,2};
-		int me = majorityElement(nums);
+		int me = majorityElement_voting(nums);
 		System.out.println(me);
 	}
 }
