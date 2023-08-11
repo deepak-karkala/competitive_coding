@@ -54,11 +54,13 @@ class GasStation {
 		for(int c: cost) total_cost += c;
 		if (total_gas < total_cost) return -1;
 
-		int curr_gas=0, start_idx=-1;
+		int curr_gas=0, start_idx=0;
 		total_gas=0;
 		for(int i=0; i<gas.length; i++) {
 			curr_gas += gas[i] - cost[i];
 			total_gas += gas[i] - cost[i];
+			// When current_gas becomes negative, start over from next
+			// station with 0 gas
 			if (curr_gas < 0) {
 				curr_gas = 0;
 				start_idx = i + 1;
