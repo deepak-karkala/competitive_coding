@@ -54,13 +54,25 @@ class GasStation {
 		for(int c: cost) total_cost += c;
 		if (total_gas < total_cost) return -1;
 
-		
+		int curr_gas=0, start_idx=-1;
+		total_gas=0;
+		for(int i=0; i<gas.length; i++) {
+			curr_gas += gas[i] - cost[i];
+			total_gas += gas[i] - cost[i];
+			if (curr_gas < 0) {
+				curr_gas = 0;
+				start_idx = i + 1;
+			}
+		}
+
+		return total_gas>=0 ? start_idx : -1;
+
 	}
 
 	public static void main(String[] args) {
 		int[] gas = {1,2,3,4,5};
 		int[] cost = {3,4,5,1,2};
-		int start = gasStation_bruteforce(gas, cost);
+		int start = gasStation_optimised(gas, cost);
 		System.out.println(start);
 	}
 }
