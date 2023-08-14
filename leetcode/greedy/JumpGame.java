@@ -77,8 +77,27 @@ class JumpGame {
     }
 
 
+    /*
+    	DP bottom up
+		Start from last index and keep checking if last index can be reached
+		=> Time: O(N^2) Space:O(N)
+    */
+    private static boolean canJump_dp_bottomup(int[] nums) {
+    	boolean[] dp = new boolean[nums.length];
+    	dp[nums.length-1] = true;
+
+    	for (int i=nums.length-2; i>=0; i--) {
+    		//if (nums[i]==0) dp[i] = false;
+    		for (int j=i+1; j<i+nums[i]+1; j++) {
+    			if (j<nums.length && dp[j]) dp[i] = true;
+    		}
+
+    	}
+    	return dp[0];
+    }
+
     public static void main(String[] args) {
-    	int[] nums = {2,3,1,1,4};
-    	System.out.println(canJump_dp_memo_top(nums));
+    	int[] nums = {0,2,3};
+    	System.out.println(canJump_dp_bottomup(nums));
     }
 }
