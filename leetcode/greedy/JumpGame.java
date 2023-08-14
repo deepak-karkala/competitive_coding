@@ -42,11 +42,43 @@ class JumpGame {
 		Same as above, compute once and store
 		=> Time: O(N^2) Space:O(N)
     */
-    
+    private static boolean canJump_dp_memo_top(int[] nums) {
+    	int[] dp = new int[nums.length];
+    	for(int i=0; i<dp.length; i++) dp[i] = -1;
+        return canJump_dp_memo(nums, 0, dp);
+    }
 
-    
+    private static boolean canJump_dp_memo(int[] nums, int curr_idx, int[] dp) {
+    	// Return memoised value if previously computed
+    	if (dp[curr_idx] != -1) return dp[curr_idx]==1 ? true: false;
+
+    	// If goes beyond last index => no jump to last index
+    	if (curr_idx > nums.length-1) {
+    		dp[curr_idx] = 0;
+    		return false;
+    	}
+
+    	// If reaches last index, return true
+    	if (curr_idx == nums.length-1) {
+    		dp[curr_idx] = 1;
+    		return	true;
+    	}
+
+    	// Iterate from 1 to max num of jumps from this index
+    	for(int i=curr_idx+1; i<=curr_idx+nums[curr_idx]; i++) {
+    		if (canJump_dp_memo(nums, i, dp)) {
+    			dp[curr_idx] = 1;
+    			return true;
+    		}
+    	}
+
+    	dp[curr_idx] = 0;
+    	return false;
+    }
+
+
     public static void main(String[] args) {
-    	int[] nums = {3,2,1,0,4};
-    	System.out.println(canJump_recursive_top(nums));
+    	int[] nums = {2,3,1,1,4};
+    	System.out.println(canJump_dp_memo_top(nums));
     }
 }
