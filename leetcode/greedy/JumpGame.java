@@ -87,7 +87,7 @@ class JumpGame {
     	dp[nums.length-1] = true;
 
     	for (int i=nums.length-2; i>=0; i--) {
-    		//if (nums[i]==0) dp[i] = false;
+    		if (nums[i]==0) dp[i] = false;
     		for (int j=i+1; j<i+nums[i]+1; j++) {
     			if (j<nums.length && dp[j]) dp[i] = true;
     		}
@@ -96,8 +96,35 @@ class JumpGame {
     	return dp[0];
     }
 
+    /*
+    	Greedy
+		Go to max jump from each index
+		If at any index, reach < current_idx, return false
+		Time: O(N)
+    */
+    private static boolean canJump_greedy(int[] nums) {
+    	//it shows at max what index can I reach.
+        //initially I can only reach index 0, hence reach = 0
+        int reach = 0; 
+    
+        for(int idx = 0; idx < nums.length; idx++) {
+            //at every index I'll check if my reach was atleast able to 
+            //reach that particular index.
+            
+            //reach >= idx -> great, carry on. Otherwise, 
+            if(reach < idx) return false;
+            
+            //now as you can reach this index, it's time to update your reach
+            //as at every index, you're getting a new jump length.
+            reach = Math.max(reach, idx + nums[idx]);
+        }
+        
+        //this means that you reached till the end of the array
+        return true;
+    }
+
     public static void main(String[] args) {
     	int[] nums = {0,2,3};
-    	System.out.println(canJump_dp_bottomup(nums));
+    	System.out.println(canJump_greedy(nums));
     }
 }
