@@ -81,8 +81,37 @@ class JumpGameII {
     	return dp[curr_idx] = min_jumps;
     }
 
+    /*
+    	DP bottom up
+		Same as above, compute once and store
+		=> Time: O(N^2) Space:O(N)
+    */
+    private static int canJump_dp_bottomup(int[] nums) {
+    	int[] dp = new int[nums.length];
+    	for(int i=0; i<nums.length; i++) dp[i] = Integer.MAX_VALUE;
+
+    	dp[nums.length-1] = 0;	// O steps from last index
+    	
+    	// Compute for each index starting from n-2 down to 0
+    	for(int i=nums.length-2; i>=0; i--) {
+    		int min_jumps = Integer.MAX_VALUE;
+    		
+    		// Iterate from 1 to max_jumps from this index
+    		for(int j=i+1; j<=i+nums[i]; j++) {
+    			if (j < nums.length) {
+    				int num_jumps_from_i = dp[j];
+    				if (num_jumps_from_i != Integer.MAX_VALUE) {
+		    			dp[i] = Math.min(dp[i], 1+num_jumps_from_i);
+		    		}
+	    		}
+    		}
+    	}
+    	return dp[0];
+    }
+
+
 	public static void main(String[] args) {
     	int[] nums = {2,3,0,1,4};
-    	System.out.println(canJump_dp_memo_top(nums));
+    	System.out.println(canJump_dp_bottomup(nums));
     }
 }
