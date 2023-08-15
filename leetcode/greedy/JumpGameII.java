@@ -23,7 +23,7 @@ class JumpGameII {
 		Recursive
 		For each index, max_jump can be upto n => So n options (for loop)
 		For each of those n options, recurse further, depth = n
-		=> Time: O(N^N) Space: O(N)
+		=> Time: O(max(nums)^N) Space: O(N)
 	*/
     private static int canJump_recursive_top(int[] nums) {
         return canJump_recursive(nums, 0);
@@ -51,7 +51,7 @@ class JumpGameII {
     /*
     	DP top down
 		Same as above, compute once and store
-		=> Time: O(N^2) Space:O(N)
+		=> Time: O(max(nums)*N) Space:O(N)
     */
     private static int canJump_dp_memo_top(int[] nums) {
     	int[] dp = new int[nums.length];
@@ -84,7 +84,7 @@ class JumpGameII {
     /*
     	DP bottom up
 		Same as above, compute once and store
-		=> Time: O(N^2) Space:O(N)
+		=> Time: O(max(nums)*N) Space:O(N)
     */
     private static int canJump_dp_bottomup(int[] nums) {
     	int[] dp = new int[nums.length];
@@ -110,8 +110,30 @@ class JumpGameII {
     }
 
 
+    /*
+    	Greedy
+    	Time: O(N)
+    */
+    private static int canJump_greedy(int[] nums) {
+    	//initialize jump=1 , we are taking jump from 0th index to the range mxjump
+        //curr_jump, we can take jump from particular  index
+		//max_reach , we cango up to maximum
+		//num_jumps to count no. of jump
+
+    	if (nums==null || nums.length<=1) return 0;
+    	int num_jumps = 1, max_reach=nums[0], curr_jump=nums[0];
+    	for(int i=1; i<nums.length-1; i++) {
+    		max_reach = Math.max(max_reach, i+nums[i]);
+    		if (i == curr_jump) {
+    			num_jumps++;
+    			curr_jump = max_reach;
+    		}
+    	}
+    	return num_jumps;
+    }
+
 	public static void main(String[] args) {
-    	int[] nums = {2,3,0,1,4};
-    	System.out.println(canJump_dp_bottomup(nums));
+    	int[] nums = {0};
+    	System.out.println(canJump_greedy(nums));
     }
 }
