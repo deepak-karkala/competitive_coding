@@ -57,11 +57,48 @@ class GraphValidPath {
 		return false;
 	}
 
+	// Approach 1: DFS Path exists
+	// Time: O(V + E) Space: O(V)
+	private static boolean validPath_dfs(int n, int[][] edges, int source, int destination) {
+		if (source == destination) return true;
+
+		// Init graph and add edges
+		LinkedList<Integer> adj[] = new LinkedList[n];
+		for(int i=0; i<n; i++) adj[i] = new LinkedList<Integer>();
+		for(int i=0; i<edges.length; i++) {
+			adj[edges[i][0]].add(edges[i][1]);
+			adj[edges[i][1]].add(edges[i][0]);
+		}
+
+		// BFS init
+		Stack<Integer> stack = new Stack<Integer>();
+		boolean[] visited = new boolean[n];
+
+		stack.push(source);
+		visited[source] = true;
+
+		// Iterate till queue is empty
+		while(stack.size() != 0) {
+			int node = stack.pop();
+
+			// Add all nodes in this node's adj list to queue
+			for(int v: adj[node]) {
+				if (visited[v] != true) {
+					visited[v] = true;
+					stack.push(v);
+					if (v == destination) return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static void main(String[] args){
 		int num_nodes = 10;
 		int[][] edges = { {0,7},{0,8},{6,1},{2,0},{0,4},{5,8},{4,7},{1,3},{3,5},{6,5} };
 
-		boolean is_path = validPath_bfs(num_nodes, edges, 7, 5);
+		boolean is_path = validPath_dfs(num_nodes, edges, 7, 9);
 		System.out.println(is_path);
 	}
 }
