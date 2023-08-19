@@ -20,6 +20,8 @@ is a valid path from source to destination, or false otherwise.
 import java.util.*;
 
 class GraphValidPath {
+	static boolean is_path;
+
 	// Approach 1: BFS Path exists
 	// Time: O(V + E) Space: O(V)
 	private static boolean validPath_bfs(int n, int[][] edges, int source, int destination) {
@@ -44,12 +46,13 @@ class GraphValidPath {
 		while(queue.size() != 0) {
 			int node = queue.poll();
 
+			if (node == destination) return true;
+
 			// Add all nodes in this node's adj list to queue
 			for(int v: adj[node]) {
 				if (visited[v] != true) {
 					visited[v] = true;
 					queue.add(v);
-					if (v == destination) return true;
 				}
 			}
 		}
@@ -57,7 +60,7 @@ class GraphValidPath {
 		return false;
 	}
 
-	// Approach 1: DFS Path exists
+	// Approach 2: DFS Iterative Path exists
 	// Time: O(V + E) Space: O(V)
 	private static boolean validPath_dfs(int n, int[][] edges, int source, int destination) {
 		if (source == destination) return true;
@@ -94,11 +97,48 @@ class GraphValidPath {
 		return false;
 	}
 
+
+	// Approach 3: DFS Recursive Path exists
+	// Time: O(V + E) Space: O(V)
+	private static boolean validPath_dfs_recursive(int n, int[][] edges, int source, int destination) {
+		if (source == destination) return true;
+
+		// Init graph and add edges
+		LinkedList<Integer> adj[] = new LinkedList[n];
+		for(int i=0; i<n; i++) adj[i] = new LinkedList<Integer>();
+		for(int i=0; i<edges.length; i++) {
+			adj[edges[i][0]].add(edges[i][1]);
+			adj[edges[i][1]].add(edges[i][0]);
+		}
+
+		boolean[] visited = new boolean[n];
+		is_path = false;
+		dfs_recursive(source, destination, visited, adj);
+		return is_path;
+	}
+
+	private static void dfs_recursive(int source, int destination, boolean[] visited, LinkedList<Integer>[] adj) {
+		if (!visited[source] && !is_path) {
+			//System.out.println(source);
+			if (source == destination) {
+				is_path = true;
+				return;
+			}
+
+			visited[source] = true;
+			// Add all nodes in this node's adj list to queue
+			for(int v: adj[source]) {
+				dfs_recursive(v, destination, visited, adj);
+			}
+		}
+	}
+
 	public static void main(String[] args){
 		int num_nodes = 10;
-		int[][] edges = { {0,7},{0,8},{6,1},{2,0},{0,4},{5,8},{4,7},{1,3},{3,5},{6,5} };
+		int[][] edges = { {4,3}, {1,4}, {4,8}, {1,7}, {6,4}, {4,2}, {7,4}, {4,0}, {0,9}, {5,4} };
+		//int[][] edges = { {5,4}, {4,0}, {0,9}};
 
-		boolean is_path = validPath_dfs(num_nodes, edges, 7, 9);
+		boolean is_path = validPath_dfs_recursive(num_nodes, edges, 5, 9);
 		System.out.println(is_path);
 	}
 }
