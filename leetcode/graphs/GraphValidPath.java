@@ -20,7 +20,6 @@ is a valid path from source to destination, or false otherwise.
 import java.util.*;
 
 class GraphValidPath {
-	static boolean is_path;
 
 	// Approach 1: BFS Path exists
 	// Time: O(V + E) Space: O(V)
@@ -112,20 +111,18 @@ class GraphValidPath {
 		}
 
 		boolean[] visited = new boolean[n];
-		is_path = false;
 		dfs_recursive(source, destination, visited, adj);
-		return is_path;
+		return visited[destination];
 	}
 
 	private static void dfs_recursive(int source, int destination, boolean[] visited, LinkedList<Integer>[] adj) {
-		if (!visited[source] && !is_path) {
+		if (!visited[source] && !visited[destination]) {
 			//System.out.println(source);
+			visited[source] = true;
 			if (source == destination) {
-				is_path = true;
 				return;
 			}
 
-			visited[source] = true;
 			// Add all nodes in this node's adj list to queue
 			for(int v: adj[source]) {
 				dfs_recursive(v, destination, visited, adj);
