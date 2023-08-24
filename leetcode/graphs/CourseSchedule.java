@@ -16,6 +16,10 @@ import java.util.*;
 
 
 class CourseSchedule {
+	// BFS Topological Sort
+	// Keep adding vertices with indegree=0 to queue and check if at the end
+	//		all the vertices are visited
+	// Time: O(V + E)
     private static boolean canFinish(int numCourses, int[][] prerequisites) {
         // Create adjacency list based on prerequisites and update indegrees of vertices
         int[] indegree = new int[numCourses];
