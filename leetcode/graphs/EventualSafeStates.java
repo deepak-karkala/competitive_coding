@@ -53,9 +53,57 @@ class EventualSafeStates {
     	return true;
     }
 
+
+    // BFS: Topological sort
+    //		Start with terminal/safe nodes, add to queue
+    //		Poll from queue, add node to result as safe node
+	//			Scan all nodes ending at this node, decrement outdegree by 1
+	//			If outdegree==0, add this node to queue
+	//		To scan all nodes ending at this node, build a reverse adj list
+    // Time: O(V + E)
+	private static List<Integer> eventualSafeNodes_bfs(int[][] graph) {
+		// Array to track outdegree
+		int[] outdegree = new int[graph.length];
+
+		// Build reverse adjacency list
+		List<Integer>[] adj = new ArrayList[graph.length];
+		for(int i=0; i<graph.length; i++) adj[i] = new ArrayList<Integer>();
+		for(int i=0; i<graph.length; i++) {
+			for(int neighbour: graph[i]) {
+				adj[neighbour].add(i);
+				outdegree[i]++;
+			}
+		}
+
+		// Start with terminal (safe) nodes (outdegree=0), add to queue
+		Queue<Integer> queue = new LinkedList<Integer>();
+		for(int i=0; i<graph.length; i++) {
+			if (outdegree[i] == 0) queue.offer(i);
+		}
+
+		List<Integer> res = new ArrayList<Integer>();
+		// BFS
+		while(!queue.isEmpty()) {
+			int v = queue.poll();
+			res.add(v);
+
+			// Scan all neighbours (nodes from where there is an edge to
+			// safe node) of safe nodes
+			// When outdegree==0 add to queue, mark as safe node
+			for(int u: adj[v]) {
+				outdegree[u]--;
+				if (outdegree[u]==0) queue.offer(u);
+			}
+		}
+
+		Collections.sort(res);
+		return res;
+    }
+
+
     public static void main(String[] args) {
     	int[][] graph = { {1,2}, {2,3}, {5}, {0}, {5}, {}, {}};
-    	List<Integer> list = eventualSafeNodes(graph);
+    	List<Integer> list = eventualSafeNodes_bfs(graph);
     	for(int i: list) System.out.println(i);
     }
 }
