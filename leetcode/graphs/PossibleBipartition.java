@@ -40,6 +40,7 @@ class PossibleBipartition {
     private static boolean dfs(List<Integer>[] adj, int[] colors, int node, int color) {
     	colors[node] = color;
     	for(int neighbour: adj[node]) {
+    		// If at any point, color of this node and neighbour node is the same, return false
     		if (colors[neighbour] == colors[node]) return false;
     		if (colors[neighbour] == 0 && !dfs(adj, colors, neighbour, -color)) return false;
     	}
@@ -71,6 +72,7 @@ class PossibleBipartition {
 		        while(!queue.isEmpty()) {
 		        	int node = queue.poll();
 		        	for(int neighbour: adj[node]) {
+    					// If at any point, color of this node and neighbour node is the same, return false
 		        		if (colors[neighbour] == colors[node]) return false;
 		        		if (colors[neighbour] == 0) {
 		        			colors[neighbour] = -colors[node];
