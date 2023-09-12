@@ -13,6 +13,7 @@ land cell or walking off the boundary of the grid.
 Return the number of land cells in grid for which we cannot walk off the boundary
 of the grid in any number of moves.
 */
+import java.util.*;
 
 class NumberOfEnclaves {
 	/*
@@ -58,9 +59,50 @@ class NumberOfEnclaves {
     	dfs(grid, i, j+1);
     }
 
+    /*
+	Approach: BFS from boundary
+	*/
+    private static int numEnclaves_bfs(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+
+        // Start BFS from boundary land (1) cells
+        Queue<int[]> queue = new LinkedList<int[]>();
+    	for(int i=0; i<m; i++) {
+        	for(int j=0; j<n; j++) {
+        		if (i==0 || j==0 || i==m-1 || j==n-1) queue.offer(new int[]{i,j});
+        	}
+        }
+
+        while(!queue.isEmpty()) {
+        	int[] cell = queue.poll();
+        	int i=cell[0], j=cell[1];
+
+        	// Do nothing if out of bounds or if current cell is water (0)
+        	if (i<0 || j<0 || i>=m || j>=n || grid[i][j]!=1) continue;
+        	
+        	// Mark as possible to walk off from boundary
+        	grid[i][j] = -1;
+        	
+        	// Run BFS from surrounding cells
+        	queue.offer(new int[] {i-1, j});
+        	queue.offer(new int[] {i+1, j});
+        	queue.offer(new int[] {i, j-1});
+        	queue.offer(new int[] {i, j+1});
+        }
+
+        // Count remaining 1s as not possible to walk off from boundary
+        int nEnclaves = 0;
+        for(int i=0; i<m; i++) {
+        	for(int j=0; j<n; j++) {
+        		if (grid[i][j] == 1) nEnclaves++;
+        	}
+        }
+        return nEnclaves;
+    }
+
     public static void main(String[] args) {
     	int[][] grid = { {0,0,0,0}, {1,0,1,0}, {0,1,1,0}, {0,0,0,0} };
-    	int nEnclaves = numEnclaves(grid);
+    	int nEnclaves = numEnclaves_bfs(grid);
     	System.out.println(nEnclaves);
     }
 }
