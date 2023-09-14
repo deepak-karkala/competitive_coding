@@ -39,6 +39,7 @@ class KeysRooms {
         		if (!roomsVisited.contains(room)) {
         			roomsVisited.add(room);
         			queue.offer(room);
+        			if (roomsVisited.size() == n) return true;
         		}
         	}
         }
@@ -46,13 +47,37 @@ class KeysRooms {
         return roomsVisited.size() == n;
     }
 
+
+    /*
+	Approach: DFS
+		Keep visiting all nodes starting from room 0 (DFS)
+		At the end, check if all nodes can be visited
+	*/
+    private static boolean canVisitAllRooms_dfs(List<List<Integer>> rooms) {
+        List<Integer> roomsVisited = new ArrayList<Integer>();
+        roomsVisited.add(0);
+    	dfs(rooms, 0, roomsVisited);
+    	return roomsVisited.size() == rooms.size();
+    }
+
+    private static void dfs(List<List<Integer>> rooms, int roomId, List<Integer> roomsVisited) {
+    	//if (roomsVisited.contains(roomId)) return roomsVisited;
+    	// Collect keys from this room and run DFS from each of those rooms
+    	for(int room: rooms.get(roomId)) {
+    		if (!roomsVisited.contains(room)) {
+    			roomsVisited.add(room);
+    			dfs(rooms, room, roomsVisited);
+    		}
+    	}
+    }
+
     public static void main(String[] args) {
     	List<List<Integer>> rooms = new ArrayList<List<Integer>>();
-    	rooms.add(new ArrayList<>(Arrays.asList(1)));
+    	rooms.add(new ArrayList<>(Arrays.asList(1, 3)));
+    	rooms.add(new ArrayList<>(Arrays.asList(3, 0, 1)));
     	rooms.add(new ArrayList<>(Arrays.asList(2)));
-    	rooms.add(new ArrayList<>(Arrays.asList(3)));
-    	rooms.add(new ArrayList<>(Arrays.asList()));
+    	rooms.add(new ArrayList<>(Arrays.asList(0)));
 
-    	System.out.println(canVisitAllRooms_bfs(rooms));
+    	System.out.println(canVisitAllRooms_dfs(rooms));
     }
 }
