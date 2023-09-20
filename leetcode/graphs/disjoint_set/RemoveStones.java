@@ -26,8 +26,11 @@ class RemoveStones {
         UnionFind uf = new UnionFind(numTotalStones);
 
         for (int i=0; i<stones.length; i++) {
+        	for(int j=i+1; j<stones.length; j++) {
+        		if (stones[i][0]==stones[j][0] || stones[i][1]==stones[j][1]) uf.union(i, j);
+        	}
         }
-        return numTotalStones;
+        return numTotalStones - uf.getNumOfDisjointSets();
     }
 
     /*
@@ -66,7 +69,7 @@ class RemoveStones {
 
     public static void main(String[] args) {
     	int[][] stones = { {0,0},{0,1},{1,0},{1,2},{2,1},{2,2} };
-    	System.out.println(removeStones_dfs(stones));
+    	System.out.println(removeStones_uf(stones));
     }
 }
 
