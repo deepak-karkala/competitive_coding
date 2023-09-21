@@ -90,7 +90,6 @@ class RedundantConnection {
         return additional_edge;
     }
 
-
     public static void main(String[] args) {
     	int[][] edges = { {1,2}, {2,3}, {3,4}, {1,4}, {1,5}};
     	int[] edge = findRedundantConnection(edges);
