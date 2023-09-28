@@ -101,15 +101,108 @@ class AccountsMerge {
         return mergedAccounts;
     }
 
+
+    /*
+    Approach: DFS
+    1. Each email is a node in the graph
+    2. Create adj list based on emails in each account
+    3. Run DFS from each unvisited node
+        => All emails of same owner will be in separate connected components
+    4. As we go through DFS, add all nodes belonging to same connected
+        component into separate lists
+    5. Each list: Sort, prepend owner name, return list of lists of merged accounts
+    */
+    private static List<List<String>> accountsMerge_dfs(List<List<String>> accounts) {
+        // Email to owner and email to unique index mapping
+        Map<String, Integer> emailToIndex = new HashMap<String, Integer>();
+        Map<String, String> emailToOwner = new HashMap<String, String>();
+
+        int numEmails = 0;
+        for(int i=0; i<accounts.size(); i++) {
+            for(int j=1; j<accounts.get(i).size(); j++) {
+                String email = accounts.get(i).get(j);
+                String owner = accounts.get(i).get(0);
+                // Add email to owner mapping
+                if (!emailToOwner.containsKey(email)) emailToOwner.put(email, owner);
+
+                // Map unique id to email if doesn't exist yet
+                if (!emailToIndex.containsKey(email)) emailToIndex.put(email, numEmails++);
+
+            }
+        }
+
+        for(String email: emailToIndex.keySet()) {
+            //System.out.println(email + "-" + emailToIndex.get(email));
+        }
+
+        // Build adj list
+        List<String> adj[] = new ArrayList[numEmails];
+        for(int i=0; i<numEmails; i++) adj[i] = new ArrayList<>();
+
+        for(int i=0; i<accounts.size(); i++) {
+            for(int j=1; j<accounts.get(i).size(); j++) {
+                if (j<accounts.get(i).size()-1) {
+                    String email1 = accounts.get(i).get(j);
+                    String email2 = accounts.get(i).get(j+1);
+                    adj[emailToIndex.get(email1)].add(email2);
+                } else {
+                    String email1 = accounts.get(i).get(j);
+                    String email2 = accounts.get(i).get(1);
+                    adj[emailToIndex.get(email1)].add(email2);
+                }
+            }
+        }
+
+        for(int i=0; i<numEmails; i++) {
+            //System.out.println(adj[i]);
+        }
+
+        //Run DFS from each unvisited node
+        //  => All emails of same owner will be in separate connected components
+        boolean[] visited = new boolean[numEmails];
+        List<List<String>> mergedAccounts = new ArrayList<List<String>>();
+        for(String email: emailToIndex.keySet()) {
+            if (!visited[emailToIndex.get(email)]) {
+                Set<String> set = new HashSet<String>();
+                set = dfs(adj, visited, emailToIndex.get(email), emailToIndex, set, email);
+                System.out.println(set);
+                List<String> emails = new ArrayList<>();
+                emails.addAll(set);
+                Collections.sort(emails);
+                emails.add(0, emailToOwner.get(email));
+                mergedAccounts.add(emails);
+            }
+        }
+
+        return mergedAccounts;
+    }
+
+    private static Set<String> dfs(List<String>[] adj, boolean[] visited, int node, 
+        Map<String, Integer> emailToIndex, Set<String> set, String email) {
+        visited[node] = true;
+        set.add(email);
+        for(String dest: adj[node]) {
+            if (!visited[emailToIndex.get(dest)]) {
+                dfs(adj, visited, emailToIndex.get(dest), emailToIndex, set, dest);
+            }
+        }
+        return set;
+    }
+
     public static void main(String[] args) {
     	List<List<String>> accounts = Arrays.asList(
+            Arrays.asList("Ethan","Ethan5@m.co","Ethan4@m.co","Ethan0@m.co")
+            /*
+            Arrays.asList("Gabe","Gabe0@m.co","Gabe3@m.co","Gabe1@m.co"),
+            Arrays.asList("Kevin","Kevin3@m.co","Kevin5@m.co","Kevin0@m.co")
             Arrays.asList("John","johnsmith@mail.com","john_newyork@mail.com"),
             Arrays.asList("John","johnsmith@mail.com","john00@mail.com"),
             Arrays.asList("Mary","mary@mail.com"),
             Arrays.asList("John","johnnybravo@mail.com")
+            */
             );
 
-        List<List<String>> mergedAccounts = accountsMerge(accounts);
+        List<List<String>> mergedAccounts = accountsMerge_dfs(accounts);
         for(List<String> account: mergedAccounts) {
             System.out.println(account);
         }        
