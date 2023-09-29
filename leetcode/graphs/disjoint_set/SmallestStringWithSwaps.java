@@ -61,10 +61,41 @@ class SmallestStringWithSwaps {
         return sb.toString();
     }
 
+    /*Alternate approach using priority queue to avoid sorting */
+    private static String smallestStringWithSwaps_pq(String s, List<List<Integer>> pairs) {
+    	if (s==null || s.length()==0) return null;
+
+    	// Union find DS
+    	UnionFind uf = new UnionFind(s.length());
+    	// Union all pairs
+    	for(List<Integer> pair: pairs) {
+    		uf.union(pair.get(0), pair.get(1));
+    	}
+
+    	//Use a HashMap to map from integer (root) -> List of Characters in
+    	//	each disjoint set
+    	Map<Integer, PriorityQueue<Character>> map = new HashMap<>();
+    	for(int i=0; i<s.length(); i++) {
+    		int root = uf.find(i);
+    		map.putIfAbsent(root, new PriorityQueue<Character>());
+    		PriorityQueue<Character> characters = map.get(root);
+    		characters.offer(s.charAt(i));
+    	}
+
+    	// Insert sorted characters into right positions (based on root)
+        StringBuilder sb = new StringBuilder(s.length());
+    	for(int i=0; i<s.length(); i++) {
+    		PriorityQueue<Character> characters = map.get(uf.find(i));
+    		sb.append(characters.poll());
+        }
+        return sb.toString();
+    }
+
+
     public static void main(String[] args) {
     	String s = "dcab";
     	List<List<Integer>> pairs = Arrays.asList(Arrays.asList(0,3), Arrays.asList(1,2));
-    	System.out.println(smallestStringWithSwaps(s, pairs));
+    	System.out.println(smallestStringWithSwaps_pq(s, pairs));
     }
 }
 
