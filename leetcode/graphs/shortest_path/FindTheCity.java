@@ -42,9 +42,9 @@ class FindTheCity {
         //floyd_warshall(n, dist);
         // Run BFS (Dijkstra / BellmanFord / SPFA from each node)
         for(int src=0; src<n; src++) {
-            // dijkstra(n, dist[src], adj, src);
-            //bellman_ford(n, dist[src], edges, src);
-            spfa(n, dist[src], adj, src);
+            dijkstra(n, dist[src], adj, src);
+            // bellman_ford(n, dist[src], edges, src);
+            // spfa(n, dist[src], adj, src);
         }
 
         // For each city, count number of cities below threshold distance
@@ -85,19 +85,36 @@ class FindTheCity {
 		1. Run BFS from each node
 		2. Count number of cities with distance to other cities less than threshold
 		3. Find the city with least such cities
-    private static void dijkstra(int n, int[][] dist, int adj, int src) {
-    	Queue<Integer> queue = new LinkedList<>();
-    	queue.offer(u);
+    */
+    private static void dijkstra(int n, int[] dist, List<int[]>[] adj, int src) {
+    	PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> (a[1] - b[1]));
+    	pq.offer(new int[]{src, 0});
 
-    	while(!queue.isEmpty()) {
-    		int node = queue.poll();
+    	while(!pq.isEmpty()) {
+    		int[] node = pq.poll();
+            int u = node[0];
+            int du = node[1];
 
-    		for(int v=0; v<dist.length; v++) {
-    			if (dist[v] > dist[])
-    		}
+            // Check if du (distance from src to u through node v) with
+            //  dist[u] (min distance from src to u through all nodes so far)
+            // If du > dist[u], then don't check further nodes through u (no BFS, u not added to queue)
+            // This and Priority queue (go through nodes in ascending order of distances)
+            //     is what separates Dijkstra's from SPFA
+            if (du > dist[u]) continue;
+
+            // Iterate through all neighbouring nodes
+            // Because of PQ, nodes will be iterated in order of shortest distances
+            for(int[] next: adj[u]) {
+                int v = next[0];
+                int duv = next[1];
+
+                if (dist[u]!=Integer.MAX_VALUE && dist[v] > dist[u] + duv) {
+                    dist[v] = dist[u] + duv;
+                    pq.offer(new int[]{v, dist[v]});
+                }
+            }
     	}
     }
-    */
 
     /*
     Approach: BFS (Bellman Ford)
