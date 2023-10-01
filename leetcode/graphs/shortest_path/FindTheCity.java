@@ -31,16 +31,20 @@ class FindTheCity {
         for(int i=0; i<n; i++) dist[i][i] = 0;
 
         // Build graph (update weights with given edges)
+        List<int[]>[] adj = new ArrayList[n];
+        for(int i=0; i<n; i++) adj[i] = new ArrayList<int[]>();
         for(int[] edge: edges) {
-        	dist[edge[0]][edge[1]] = edge[2];
-        	dist[edge[1]][edge[0]] = edge[2];
+        	int u = edge[0], v = edge[1], uv = edge[2];
+            adj[u].add(new int[]{v, uv});
+            adj[v].add(new int[]{u, uv});
         }
 
         //floyd_warshall(n, dist);
         // Run BFS (Dijkstra / BellmanFord / SPFA from each node)
         for(int src=0; src<n; src++) {
             // dijkstra(n, dist[src], adj, src);
-            bellman_ford(n, dist[src], edges, src);
+            //bellman_ford(n, dist[src], edges, src);
+            spfa(n, dist[src], adj, src);
         }
 
         // For each city, count number of cities below threshold distance
@@ -111,6 +115,32 @@ class FindTheCity {
                 if (dist[u]!=Integer.MAX_VALUE && dist[v] > dist[u] + uv)
                     dist[v] = dist[u] + uv;
             }
+        }
+    }
+
+
+    /*
+    Approach: SPFA (Bellman Ford using queue)
+        1. Run BFS from each node
+        2. Count number of cities with distance to other cities less than threshold
+        3. Find the city with least such cities
+    */
+    private static void spfa(int n, int[] dist, List<int[]>[] adj, int src) {
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.offer(src);
+
+        while(!queue.isEmpty()) {
+            int u = queue.poll();
+
+            for(int[] next: adj[u]) {
+                int v = next[0];
+                int uv = next[1];
+                if (dist[u]!=Integer.MAX_VALUE && dist[v] > dist[u] + uv) {
+                    dist[v] = dist[u] + uv;
+                    queue.offer(v);
+                }
+            }
+
         }
     }
 
