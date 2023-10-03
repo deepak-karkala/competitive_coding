@@ -20,38 +20,34 @@ import java.util.*;
 
 class NetworkDelay {
 
-	// Approach: BFS
+	// Approach: Dijkstra's
     private static int networkDelayTime_dijkstras(int[][] times, int n, int k) {
     	int[] time = new int[n];
     	for(int i=0; i<time.length; i++) time[i] = Integer.MAX_VALUE;
     	time[k-1] = 0;
 
-    	List<Integer>[] adj = new ArrayList[n];
-    	for(int i=0; i<n; i++) adj[i] = new ArrayList<Integer>();
-    	for(int i=0; i<times.length; i++) adj[times[i][0]-1].add(times[i][1]-1);
+    	List<int[]>[] adj = new ArrayList[n];
+    	for(int i=0; i<n; i++) adj[i] = new ArrayList<int[]>();
+    	for(int i=0; i<times.length; i++) adj[times[i][0]-1].add(new int[]{times[i][1]-1, times[i][2]});
 
-    	// Build adj matrix
-    	int[][] weight = new int[n][n];
-        for(int i=0; i<n; i++) {
-            Arrays.fill(weight[i], Integer.MAX_VALUE);
-        }
-    	for(int i=0; i<times.length; i++) {
-    		weight[times[i][0]-1][times[i][1]-1] = times[i][2];
-    	}
-
-    	Queue<Integer> queue = new LinkedList<Integer>();
-    	queue.offer(k-1);
+    	PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> (a[1] - b[1]));
+    	pq.offer(new int[]{k-1, 0});
         boolean[] visited = new boolean[n];
         //visited[k-1] = true;
 
-    	while(!queue.isEmpty()) {
-    		int u = queue.poll();
+    	while(!pq.isEmpty()) {
+    		int[] curr = pq.poll();
+            int u = curr[0];
+            if (visited[u] || time[u]==Integer.MAX_VALUE) continue;
             visited[u] = true;
 
-    		for(int v: adj[u]) {
-    			time[v] = Math.min(time[u] + weight[u][v], time[v]);
+    		for(int[] next: adj[u]) {
+                int v = next[0];
+                int uv = next[1];
+
+                time[v] = Math.min(time[v], time[u] + uv);
     			//System.out.println(v + "-" + time[v]);
-    			if (!visited[v]) queue.offer(v);
+    			if (!visited[v]) pq.offer(new int[]{v, time[v]});
     		}
     	}
 
@@ -89,14 +85,12 @@ class NetworkDelay {
             if (dist[i] == Integer.MAX_VALUE) return -1;
             if (dist[i] > max) max = dist[i];
         }
-
-
         return max;
     }
 
     public static void main(String[] args) {
     	int[][] times = { {2,1,1}, {2,3,1}, {3,4,1} };
-    	int min = networkDelayTime_bellmanFord(times, 4, 2);
+    	int min = networkDelayTime_dijkstras(times, 4, 2);
     	System.out.println(min);
     }
 }
