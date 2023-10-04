@@ -47,10 +47,34 @@ class LetterCasePermutation {
 		return;
     }
 
-    
+    /*
+	Approach: Backtracking (Minor improvements)
+	*/
+	private static List<String> letterCasePermutation2(String s) {
+    	List<String> list = new ArrayList<String>();
+    	backtrack2(s.toCharArray(), 0, list);
+        return list;
+    }
+    private static void backtrack2(char[] chArr, int i, List<String> list) {
+    	if (i == chArr.length) {
+    		list.add(String.valueOf(chArr));
+    		return;
+    	}
+
+		if (Character.isLetter(chArr[i])){
+			chArr[i] = Character.toLowerCase(chArr[i]);
+			backtrack2(chArr, i+1, list);
+
+			chArr[i] = Character.toUpperCase(chArr[i]);
+			backtrack2(chArr, i+1, list);
+		} else {
+			backtrack2(chArr, i+1, list);
+		}
+		return;
+    }
 
     public static void main(String[] args) {
     	String s = "a1b2";
-    	System.out.println(letterCasePermutation(s));
+    	System.out.println(letterCasePermutation2(s));
     }
 }
