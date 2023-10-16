@@ -41,9 +41,36 @@ class AllPathsSourceTarget {
     	return;
     }
 
+    // Approach: BFS
+    private static List<List<Integer>> allPathsSourceTarget_bfs(int[][] graph) {
+    	List<List<Integer>> lists = new ArrayList<List<Integer>>();
+        List<Integer>list = new ArrayList<Integer>();
+    	list.add(0);
+        Queue<List<Integer>> queue = new LinkedList<List<Integer>>();
+        queue.offer(list);
+
+        while(!queue.isEmpty()) {
+        	List<Integer> path = queue.poll();
+        	int node = path.get(path.size()-1);
+
+        	// Target node reached, add path to result
+        	if (node == graph.length-1) {
+        		lists.add(new ArrayList<>(path));
+        	}
+
+        	// If not target node, then visit all paths from this node
+        	for(int dest: graph[node]) {
+                List<Integer> updatedPath = new ArrayList<>(path);
+                updatedPath.add(dest);
+        		queue.offer(updatedPath);
+        	}
+        }
+        return lists;
+    }
+
     public static void main(String[] args) {
     	int[][] graph = { {4,3,1},{3,2,4},{3},{4},{} };
-    	List<List<Integer>> lists = allPathsSourceTarget(graph);
+    	List<List<Integer>> lists = allPathsSourceTarget_bfs(graph);
     	for(List<Integer> list: lists) {
     		System.out.println(list);
     	}
