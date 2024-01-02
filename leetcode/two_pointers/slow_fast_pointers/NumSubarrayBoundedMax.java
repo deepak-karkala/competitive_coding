@@ -11,32 +11,21 @@ The test cases are generated so that the answer will fit in a 32-bit integer.
 
 class NumSubarrayBoundedMax {
     private static int numSubarrayBoundedMax(int[] nums, int left, int right) {
-        int end = 0, start = 0, count = 0, currMax = Integer.MIN_VALUE;
-
-        while(end < nums.length) {
-        	currMax = Math.max(currMax, nums[end]);
-
-        	System.out.println(end + " " + nums[end] + " " + currMax + " " + count);
-
-
-        	if (currMax >= left && currMax <= right) {
-        		count++;
-        		end++;
-        	}
-
-
-        	while (currMax > right) {
-        		start++;
-        	}
+        int j=0,count=0,res=0;
+        
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>=left && nums[i]<=right){
+                res+=i-j+1;count=i-j+1;
+            }
+            else if(nums[i]<left){
+                res+=count;
+            }
+            else{
+                j=i+1;
+                count=0;
+            }
         }
-
-        while(start < nums.length) {
-
-        	if (currMax >= left && currMax <= right) count++;
-        	start++;
-        }
-
-        return count;
+        return res;
     }
 
     public static void main(String[] args) {
