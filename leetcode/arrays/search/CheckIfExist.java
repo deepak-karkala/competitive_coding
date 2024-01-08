@@ -14,6 +14,7 @@ arr[i] == 2 * arr[j]
 import java.util.*;
 
 class CheckIfExist {
+	// Hashset
     private static boolean checkIfExist(int[] arr) {
         Set<Integer> set = new HashSet<>();
         for(int n: arr) {
