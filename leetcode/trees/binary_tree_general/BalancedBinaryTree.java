@@ -22,6 +22,7 @@ class TreeNode {
  
 public class BalancedBinaryTree {
 
+	// Recursive multipass O(n^2)
 	private static boolean isBalanced(TreeNode root) {
 		if (root == null) return true;
 		int depthDiff = Math.abs(getDepth(root.left) - getDepth(root.right));
@@ -34,6 +35,21 @@ public class BalancedBinaryTree {
 		return Math.max(getDepth(root.left), getDepth(root.right)) + 1;
 	}
 
+	// Recursive single pass O(n)
+	public boolean isBalanced(TreeNode root) {
+        return getHeight(root) != -1;
+    }
+
+    public int getHeight(TreeNode node) {
+        if (node == null) return 0;
+
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
+        // Return -1 if diff of right and left subtree height is greater than 1
+        //      or if left/right subtree is unbalanced in height
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight)>1) return -1;
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
 
 	public static void main(String[] args) {
     	//TreeNode left = new TreeNode(9);
