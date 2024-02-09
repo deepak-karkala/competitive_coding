@@ -78,7 +78,7 @@ class KthLargestStream {
 
         if (pos == key) return node.val;
         else if (key > pos) return findKthLargestRecursive(node.left, key - pos);
-        else return findKthLargestRecursive(node.right, pos);
+        else return findKthLargestRecursive(node.right, key);
     }
 
 }
