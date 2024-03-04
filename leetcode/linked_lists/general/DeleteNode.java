@@ -11,6 +11,9 @@ All the values of the linked list are unique, and it is guaranteed that the give
 */
 
 class DeleteNode {
+    // Time:O(1)
+    // Overwrite current node's value with next node's value
+    // Set next of current node to next.next
     public void deleteNode(ListNode node) {
         node.val = node.next.val;
         node.next = node.next.next;
