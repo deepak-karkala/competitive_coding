@@ -1,10 +1,11 @@
 /*
-142. Linked List Cycle II
+19. Remove Nth Node From End of List
+Solved
 Medium
-10.1K
-736
-Given the head of a linked list, return the node where the cycle begins.
-If there is no cycle, return null.
+Topics
+Companies
+Hint
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
 */
 
 class ListNode {
