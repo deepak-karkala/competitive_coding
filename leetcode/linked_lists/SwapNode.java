@@ -1,10 +1,12 @@
 /*
-142. Linked List Cycle II
+24. Swap Nodes in Pairs
+Solved
 Medium
-10.1K
-736
-Given the head of a linked list, return the node where the cycle begins.
-If there is no cycle, return null.
+Topics
+Companies
+Given a linked list, swap every two adjacent nodes and return its head. 
+You must solve the problem without modifying the values in the list's nodes 
+(i.e., only nodes themselves may be changed.)
 */
 
 class ListNode {
